@@ -203,8 +203,6 @@ const STTService = () => {
                     <button onClick={stopRecording}>녹음 중지</button>
                 )}
                 <button onClick={handleTTS}>TTS 발음 듣기</button>
-                <button onClick={handleSummarize}>텍스트 요약</button>
-                <button onClick={handleTranslate}>다국어 번역</button>
             </div>
         </div>
     );
