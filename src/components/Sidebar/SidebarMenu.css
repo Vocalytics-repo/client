@@ -1,0 +1,87 @@
+/* src/components/Sidebar/SidebarMenu.css */
+
+/* 공통 폰트, 색상 등은 필요에 따라 조정하세요 */
+* {
+    box-sizing: border-box;
+}
+
+/* 햄버거 버튼 스타일 */
+.hamburger {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 30px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1001; /* 사이드바 위에 표시되도록 높게 설정 */
+}
+
+.hamburger .bar {
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+/* 사이드바 전체 영역 */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;               /* 사이드바 너비 */
+    height: 100%;
+    background-color: #ffffff;  /* 배경색 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
+    transform: translateX(-100%); /* 초기 상태: 화면 밖 */
+    transition: transform 0.3s ease;
+    z-index: 1000;             /* 화면 위에 표시 */
+}
+
+/* 사이드바가 열렸을 때 슬라이드 인 */
+.sidebar-menu.open {
+    transform: translateX(0);
+}
+
+/* 사이드바 내부 컨텐츠 */
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    align-self: flex-end;
+    margin: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 메뉴 리스트 스타일 */
+.sidebar-content nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.sidebar-content nav li {
+    margin: 15px 0;
+    padding: 0 20px;
+}
+
+.sidebar-content nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.sidebar-content nav a:hover {
+    color: #666;
+}
