@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import STTService from './pages/STTService/STTService';
+import ProverbLearning from './pages/ProverbLearning/ProverbLearning';
 import SidebarMenu from './components/Sidebar/SidebarMenu';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/stt" element={<STTService />} />
-                {/* ... 다른 페이지 라우트 */}
+                <Route path="/proverb" element={<ProverbLearning />} />
             </Routes>
         </Router>
     );

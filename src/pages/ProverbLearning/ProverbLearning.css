@@ -1,0 +1,100 @@
+/* src/pages/ProverbLearning/ProverbLearning.css */
+
+.proverb-learning-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Proverb Card Styles */
+.proverb-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.proverb-card h2 {
+    margin-top: 0;
+}
+
+.card-buttons {
+    margin-top: 15px;
+}
+
+.proverb-card button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    border: none;
+    background-color: #5c6ac4;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.proverb-card button:hover {
+    background-color: #4b5a9d;
+}
+
+/* Search Styles */
+.proverb-search {
+    margin-bottom: 30px;
+}
+
+.proverb-search form {
+    display: flex;
+}
+
+.proverb-search input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+}
+
+.proverb-search button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #5c6ac4;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.proverb-search button:hover {
+    background-color: #4b5a9d;
+}
+
+/* Quiz Styles */
+.proverb-quiz {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.proverb-quiz h2 {
+    margin-top: 0;
+}
+
+.quiz-option {
+    margin-bottom: 10px;
+}
+
+.quiz-feedback {
+    margin-top: 15px;
+    font-weight: bold;
+}
