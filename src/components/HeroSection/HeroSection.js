@@ -24,7 +24,7 @@ function HeroSection() {
                         </button>
                     </Link>
                     <a href="#features" onClick={handleScrollToFeatures}>
-                        <button className="button secondary-button">
+                        <button className="button learn-more-button">
                             Learn More
                         </button>
                     </a>

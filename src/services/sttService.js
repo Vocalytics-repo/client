@@ -1,117 +1,62 @@
-import React, { useState, useRef } from 'react';
+// STT 서비스 API 함수
+// 실제 백엔드 연동 시 사용할 API 함수들을 정의합니다.
 
-const STTService = () => {
-    const [isRecording, setIsRecording] = useState(false);
-    const [rawText, setRawText] = useState("");
-    const [correctedText, setCorrectedText] = useState("");
-    const mediaRecorderRef = useRef(null);
-    const audioChunksRef = useRef([]);
-
-    // 마이크 녹음 시작 함수
-    const startRecording = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorderRef.current = new MediaRecorder(stream);
-            mediaRecorderRef.current.ondataavailable = event => {
-                audioChunksRef.current.push(event.data);
-            };
-            mediaRecorderRef.current.onstop = () => {
-                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-                audioChunksRef.current = [];
-                // 백엔드의 STT API 호출 (여기선 시뮬레이션)
-                simulateTranscription(audioBlob);
-            };
-            mediaRecorderRef.current.start();
-            setIsRecording(true);
-            // 실시간 음성 파형 업데이트 로직(필요 시 추가)
-        } catch (error) {
-            console.error("마이크 접근 에러:", error);
-        }
-    };
-
-    // 마이크 녹음 중지 함수
-    const stopRecording = () => {
-        if (mediaRecorderRef.current) {
-            mediaRecorderRef.current.stop();
-            setIsRecording(false);
-        }
-    };
-
-    // 전사 및 발음 교정 결과를 시뮬레이션하는 함수
-    const simulateTranscription = (audioBlob) => {
-        // 실제 구현에서는 fetch/axios로 audioBlob을 백엔드에 전송하여 결과를 받아옴
-        setTimeout(() => {
-            const simulatedRawText = "반가스비다";
-            setRawText(simulatedRawText);
-            const simulatedCorrectedText = "반갑습니다";
-            setCorrectedText(simulatedCorrectedText);
-        }, 2000);
-    };
-
-    // TTS 발음 듣기 버튼 핸들러
-    const handleTTS = () => {
-        console.log("TTS 실행: ", correctedText);
-        // 실제 구현에서는 Clova Voice API를 호출하여 음성을 재생합니다.
-    };
-
-    // 텍스트 요약 버튼 핸들러
-    const handleSummarize = () => {
-        console.log("요약 요청:", rawText);
-        // 실제 API 호출로 요약 결과를 받아온 후 state 업데이트
-        alert("요약 결과: " + rawText.substring(0, 10) + "...");
-    };
-
-    // 다국어 번역 버튼 핸들러 (현재는 영어 번역으로 한정)
-    const handleTranslate = () => {
-        console.log("번역 요청:", rawText);
-        // 실제 API 호출로 번역 결과를 받아온 후 state 업데이트
-        alert("Translation: Hello! (simulated)");
-    };
-
-    return (
-        <div className="stt-service-page">
-            <h1>STT & 발음 교정 서비스</h1>
-
-            {/* 마이크 입력 영역 */}
-            <div className="mic-control">
-                <button onClick={isRecording ? stopRecording : startRecording}>
-                    {isRecording ? "녹음 중지" : "마이크 켜기"}
-                </button>
-            </div>
-
-            {/* 실시간 음성 파형 영역 (추후 구현 가능) */}
-            <div className="waveform">
-                <p>실시간 음성 파형 표시 (Placeholder)</p>
-            </div>
-
-            {/* 전사 및 교정 결과 영역 */}
-            <div className="transcription-results">
-                <div className="raw-text">
-                    <h2>전사 결과</h2>
-                    <p>{rawText}</p>
-                </div>
-                <div className="corrected-text">
-                    <h2>교정 결과</h2>
-                    <p>
-                        {rawText && correctedText && rawText !== correctedText ? (
-                            <>
-                                {rawText} &rarr; <strong>{correctedText}</strong>
-                            </>
-                        ) : (
-                            rawText || "결과가 없습니다."
-                        )}
-                    </p>
-                </div>
-            </div>
-
-            {/* 기능 버튼 영역 */}
-            <div className="action-buttons">
-                <button onClick={handleTTS}>TTS 발음 듣기</button>
-                <button onClick={handleSummarize}>텍스트 요약</button>
-                <button onClick={handleTranslate}>다국어 번역</button>
-            </div>
-        </div>
-    );
+/**
+ * 음성 데이터를 서버로 전송하여 STT 처리를 요청합니다.
+ * @param {Blob} audioBlob - 음성 녹음 데이터
+ * @returns {Promise<Object>} - 전사 결과와 발음 교정 결과를 포함한 객체
+ */
+export const processAudioForSTT = async (audioBlob) => {
+    try {
+        // 실제 구현에서는 FormData를 사용하여 파일 업로드
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'audio.wav');
+        
+        // 백엔드 API 호출 (현재는 시뮬레이션)
+        // const response = await fetch('/api/stt', {
+        //     method: 'POST',
+        //     body: formData
+        // });
+        // const data = await response.json();
+        
+        // 시뮬레이션된 응답
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const simulatedData = {
+            transcription: '반갑습니다. 오늘은 좋은 하루입니다. 한국어 전사 결과가 여기에 스트리밍됩니다.',
+            correction: '반갑습니다. 오늘은 조은 하루입니다. → 반갑습니다. 오늘은 좋은 하루입니다.'
+        };
+        
+        return simulatedData;
+    } catch (error) {
+        console.error('STT 처리 오류:', error);
+        throw error;
+    }
 };
 
-export default STTService;
+/**
+ * TTS 서비스를 사용하여 텍스트를 음성으로 변환합니다.
+ * @param {string} text - 음성으로 변환할 텍스트
+ * @returns {Promise<Blob>} - 오디오 Blob 데이터
+ */
+export const generateTTS = async (text) => {
+    try {
+        // 실제 구현에서는 백엔드 API 호출
+        // const response = await fetch('/api/tts', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ text })
+        // });
+        // const audioBlob = await response.blob();
+        
+        // 시뮬레이션 (실제로는 오디오 파일을 반환해야 함)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('TTS 생성 요청:', text);
+        
+        return null; // 실제 구현에서는 오디오 Blob 반환
+    } catch (error) {
+        console.error('TTS 생성 오류:', error);
+        throw error;
+    }
+};
