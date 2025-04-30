@@ -1,0 +1,88 @@
+.result-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* 카드 제목 */
+.result-card h2 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 600;
+    border-bottom: none;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.result-card h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: currentColor;
+    border-radius: 2px;
+}
+
+/* 텍스트 컨텐츠 영역 */
+.text-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+    padding: 2rem;
+    background-color: rgba(248, 250, 255, 0.8);
+    border-radius: 12px;
+    min-height: 200px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.text-content p {
+    margin: 0;
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: #333;
+    word-break: keep-all;
+}
+
+/* 각 카드별 스타일 */
+.transcription-card h2 {
+    color: #5c6ac4;
+}
+
+.pronunciation-card h2 {
+    color: #6cbaa4;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.transcription-card {
+    animation-delay: 0.1s;
+}
+
+.pronunciation-card {
+    animation-delay: 0.3s;
+} 
