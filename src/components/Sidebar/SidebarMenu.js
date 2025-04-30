@@ -28,6 +28,12 @@ function SidebarMenu() {
                         &times;
                     </button>
 
+                    {/* 로고 */}
+                    <div className="sidebar-logo">
+                        <h2>Vocalytics</h2>
+                        <p>당신의 한국어 학습을 위한 서비스</p>
+                    </div>
+
                     {/* 메뉴 항목들 */}
                     <nav>
                         <ul>
@@ -38,17 +44,26 @@ function SidebarMenu() {
                             </li>
                             <li>
                                 <Link to="/stt" onClick={toggleMenu}>
-                                    STT 서비스
+                                    음성 인식 서비스
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/proverb" onClick={toggleMenu}>
-                                    속담 학습
+                                <Link to="/grammar" onClick={toggleMenu}>
+                                    문법 교정
                                 </Link>
                             </li>
-                            {/* 필요에 따라 메뉴 항목 추가 */}
+                            <li>
+                                <Link to="/pronunciation" onClick={toggleMenu}>
+                                    발음 교정
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
+
+                    {/* 하단 정보 */}
+                    <div className="sidebar-footer">
+                        <p>© 2025 Vocalytics</p>
+                    </div>
                 </div>
             </div>
         </>
