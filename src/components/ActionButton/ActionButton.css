@@ -1,0 +1,83 @@
+.action-button {
+    padding: 1.2rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.action-button:hover::before {
+    left: 100%;
+}
+
+/* 녹음 버튼 (primary 변형) */
+.primary-button {
+    background: linear-gradient(145deg, #5c6ac4, #4c5ab0);
+    color: white;
+}
+
+.primary-button:hover {
+    box-shadow: 0 6px 25px rgba(92, 106, 196, 0.3);
+    transform: translateY(-2px);
+}
+
+/* TTS 버튼 (secondary 변형) */
+.secondary-button {
+    background: white;
+    color: #5c6ac4;
+    border: 2px solid transparent !important;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.secondary-button::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    border-radius: 50px;
+}
+
+.secondary-button:hover {
+    box-shadow: 0 6px 25px rgba(108, 186, 164, 0.3);
+    transform: translateY(-2px);
+}
+
+.action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.action-button:disabled::before {
+    display: none;
+} 
