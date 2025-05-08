@@ -324,3 +324,20 @@ canvas {
         font-size: 2rem;
     }
 }
+
+.recording-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.recording-timer {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ff4d4f;
+    background: rgba(255, 77, 79, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    min-width: 80px;
+    text-align: center;
+}

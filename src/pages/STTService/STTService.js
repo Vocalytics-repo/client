@@ -10,6 +10,7 @@ const STTService = () => {
         isRecording,
         transcriptionText,
         pronunciationText,
+        recordingTime,
         transcriptionCanvasRef,
         pronunciationCanvasRef,
         analyserRef,
@@ -17,6 +18,13 @@ const STTService = () => {
         stopRecording,
         handleTTS
     } = useSTT();
+    
+    // 타이머 포맷팅 함수
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
     
     return (
         <div className="stt-service-container">
@@ -46,22 +54,30 @@ const STTService = () => {
             </div>
             
             <div className="buttons-container">
-                <ActionButton 
-                    onClick={isRecording ? stopRecording : startRecording}
-                    variant="primary"
-                >
-                    {isRecording ? (
-                        <>
-                            <StopIcon />
-                            녹음 중지
-                        </>
-                    ) : (
-                        <>
-                            <MicrophoneIcon />
-                            음성 녹음
-                        </>
+                <div className="recording-controls">
+                    <ActionButton 
+                        onClick={isRecording ? stopRecording : startRecording}
+                        variant="primary"
+                    >
+                        {isRecording ? (
+                            <>
+                                <StopIcon />
+                                녹음 중지
+                            </>
+                        ) : (
+                            <>
+                                <MicrophoneIcon />
+                                음성 녹음
+                            </>
+                        )}
+                    </ActionButton>
+                    
+                    {isRecording && (
+                        <div className="recording-timer">
+                            {formatTime(recordingTime)}
+                        </div>
                     )}
-                </ActionButton>
+                </div>
                 
                 <ActionButton 
                     onClick={handleTTS}
