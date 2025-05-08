@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { isElementVisible, calculateScrollProgress } from '../../utils/scrollUtils';
 import './FeatureSection.css';
 
@@ -9,7 +9,7 @@ function FeatureSection() {
     const [activeFeature, setActiveFeature] = useState(null);
 
     // 스크롤 위치에 따라 요소가 보이는지 확인하는 함수
-    const checkVisibility = () => {
+    const checkVisibility = useCallback(() => {
         if (featureSectionRef.current) {
             const isVisible = isElementVisible(featureSectionRef.current);
             setFeatureVisible(isVisible);
@@ -22,13 +22,13 @@ function FeatureSection() {
                 if (scrollProgress > 0.8 && activeFeature === 1) setActiveFeature(2);
             }
         }
-    };
+    }, [activeFeature]);
 
     // 컴포넌트 마운트시 스크롤 이벤트 리스너 추가
     useEffect(() => {
         window.addEventListener('scroll', checkVisibility);
         return () => window.removeEventListener('scroll', checkVisibility);
-    }, [activeFeature]);
+    }, [checkVisibility]);
 
     const featureImages = [
         "/assets/images/young-writer-taking-notes.jpg",

@@ -6,6 +6,7 @@ const useSTT = () => {
     const [transcriptionText, setTranscriptionText] = useState('');
     const [pronunciationText, setPronunciationText] = useState('');
     const [isStreaming, setIsStreaming] = useState(false);
+    const [recordingTime, setRecordingTime] = useState(0);
     
     // 오디오 관련 ref
     const mediaRecorderRef = useRef(null);
@@ -13,6 +14,7 @@ const useSTT = () => {
     const analyserRef = useRef(null);
     const streamRef = useRef(null);
     const audioChunksRef = useRef([]);
+    const timerRef = useRef(null);
     
     // 캔버스 ref
     const transcriptionCanvasRef = useRef(null);
@@ -28,8 +30,29 @@ const useSTT = () => {
         return () => {
             stopAllAudio();
             clearInterval(streamingInterval.current);
+            clearInterval(timerRef.current);
         };
     }, []);
+    
+    // 타이머 시작
+    const startTimer = () => {
+        setRecordingTime(0);
+        timerRef.current = setInterval(() => {
+            setRecordingTime(prev => {
+                if (prev >= 60) {
+                    stopRecording();
+                    return 60;
+                }
+                return prev + 1;
+            });
+        }, 1000);
+    };
+    
+    // 타이머 중지
+    const stopTimer = () => {
+        clearInterval(timerRef.current);
+        setRecordingTime(0);
+    };
     
     // 마이크 녹음 시작
     const startRecording = async () => {
@@ -65,6 +88,7 @@ const useSTT = () => {
             source.connect(analyserRef.current);
             
             setIsRecording(true);
+            startTimer();
         } catch (error) {
             console.error('녹음 시작 오류:', error);
             alert('마이크 접근 권한을 허용해 주세요.');
@@ -78,6 +102,7 @@ const useSTT = () => {
         }
         
         setIsRecording(false);
+        stopTimer();
         
         // 스트림 트랙 중지
         if (streamRef.current) {
@@ -165,6 +190,7 @@ const useSTT = () => {
         transcriptionText,
         pronunciationText,
         isStreaming,
+        recordingTime,
         transcriptionCanvasRef,
         pronunciationCanvasRef,
         analyserRef,

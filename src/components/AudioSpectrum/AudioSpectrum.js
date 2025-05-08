@@ -1,46 +1,31 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import './AudioSpectrum.css';
 
 const AudioSpectrum = ({ canvasRef, isRecording, analyser }) => {
     const animationIdRef = useRef(null);
     
-    useEffect(() => {
-        if (isRecording && analyser) {
-            drawSpectrum();
-        } else {
-            drawIdleSpectrum();
-        }
-        
-        return () => {
-            if (animationIdRef.current) {
-                cancelAnimationFrame(animationIdRef.current);
-                animationIdRef.current = null;
-            }
-        };
-    }, [isRecording, analyser]);
-    
     // 유휴 상태에서의 스펙트럼 애니메이션
-    const drawIdleSpectrum = () => {
+    const drawIdleSpectrum = useCallback(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         
         const ctx = canvas.getContext('2d');
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
+        const width = canvas.width;
+        const height = canvas.height;
         
         // 바의 개수와 너비 계산
         const barCount = 64;
-        const barWidth = Math.ceil(canvasWidth / barCount);
+        const barWidth = Math.ceil(width / barCount);
         const barGap = 2;
         
         let phase = 0;
         
         const animate = () => {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            ctx.clearRect(0, 0, width, height);
             
             // 배경 그리기
             ctx.fillStyle = '#f8faff';
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            ctx.fillRect(0, 0, width, height);
             
             // 바 그리기
             ctx.fillStyle = '#5c6ac4';
@@ -52,13 +37,13 @@ const AudioSpectrum = ({ canvasRef, isRecording, analyser }) => {
                 
                 const barHeight = amplitude;
                 const x = i * (barWidth + barGap);
-                const y = canvasHeight / 2 - barHeight / 2; // 중앙에서 시작
+                const y = height / 2 - barHeight / 2; // 중앙에서 시작
                 
                 // 위쪽 바
                 ctx.fillRect(x, y, barWidth, barHeight);
                 
                 // 아래쪽 바 (위아래 대칭)
-                ctx.fillRect(x, canvasHeight / 2 + barHeight / 2, barWidth, -barHeight);
+                ctx.fillRect(x, height / 2 + barHeight / 2, barWidth, -barHeight);
             }
             
             phase += 0.05; // 애니메이션 속도 조절
@@ -66,16 +51,16 @@ const AudioSpectrum = ({ canvasRef, isRecording, analyser }) => {
         };
         
         animate();
-    };
+    }, [canvasRef]);
     
     // 실시간 스펙트럼 애니메이션
-    const drawSpectrum = () => {
+    const drawSpectrum = useCallback(() => {
         const canvas = canvasRef.current;
         if (!canvas || !analyser) return;
         
         const ctx = canvas.getContext('2d');
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
+        const width = canvas.width;
+        const height = canvas.height;
         
         // 스펙트럼 데이터 준비
         const bufferLength = analyser.frequencyBinCount;
@@ -92,29 +77,29 @@ const AudioSpectrum = ({ canvasRef, isRecording, analyser }) => {
         };
         
         draw();
-    };
+    }, [analyser, canvasRef]);
     
     // 오디오 스펙트럼 바 그리기
-    const drawCanvasSpectrum = (canvas, ctx, dataArray, bufferLength) => {
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
+    const drawCanvasSpectrum = useCallback((canvas, ctx, dataArray, bufferLength) => {
+        const width = canvas.width;
+        const height = canvas.height;
         
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.clearRect(0, 0, width, height);
         
         // 배경 그리기
         ctx.fillStyle = '#f8faff';
-        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+        ctx.fillRect(0, 0, width, height);
         
         // 바의 개수와 너비 계산
         const barCount = 64; // 원하는 바의 개수
-        const barWidth = Math.ceil(canvasWidth / barCount);
+        const barWidth = Math.ceil(width / barCount);
         const barGap = 2; // 바 사이의 간격
         
         // 데이터 샘플링 (데이터를 바의 개수에 맞게 축소)
         const step = Math.floor(bufferLength / barCount);
         
         // 중앙선에서 바가 위아래로 그려지도록 함
-        const centerY = canvasHeight / 2;
+        const centerY = height / 2;
         
         ctx.fillStyle = '#5c6ac4';
         
@@ -139,7 +124,22 @@ const AudioSpectrum = ({ canvasRef, isRecording, analyser }) => {
             // 아래쪽 바 (위아래 대칭)
             ctx.fillRect(x, centerY, barWidth, barHeight / 2);
         }
-    };
+    }, []);
+    
+    useEffect(() => {
+        if (isRecording && analyser) {
+            drawSpectrum();
+        } else {
+            drawIdleSpectrum();
+        }
+        
+        return () => {
+            if (animationIdRef.current) {
+                cancelAnimationFrame(animationIdRef.current);
+                animationIdRef.current = null;
+            }
+        };
+    }, [isRecording, analyser, drawSpectrum, drawIdleSpectrum]);
     
     return (
         <div className="spectrum-container">
