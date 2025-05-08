@@ -12,15 +12,27 @@ export const processAudioForSTT = async (audioBlob) => {
         const formData = new FormData();
         formData.append('audio', audioBlob, 'audio.wav');
         
+	const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/stt`, {
+		method: "POST",
+		body: formData,
+	});
+
         // 백엔드 API 호출 (현재는 시뮬레이션)
-        // const response = await fetch('/api/stt', {
+        //const response = await fetch('/api/stt', {
         //     method: 'POST',
         //     body: formData
         // });
-        // const data = await response.json();
-        
+        const data = await response.json();
+        return {
+		transcription: data.transcription,
+		correction: data.correction,
+	};
+    } catch (error) {
+	    console.error("STT 처리 오류:", error);
+	    throw error;
+    }
         // 시뮬레이션된 응답
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        /* await new Promise(resolve => setTimeout(resolve, 2000));
         const simulatedData = {
             transcription: '반갑습니다. 오늘은 좋은 하루입니다. 한국어 전사 결과가 여기에 스트리밍됩니다.',
             correction: '반갑습니다. 오늘은 조은 하루입니다. → 반갑습니다. 오늘은 좋은 하루입니다.'
@@ -30,7 +42,11 @@ export const processAudioForSTT = async (audioBlob) => {
     } catch (error) {
         console.error('STT 처리 오류:', error);
         throw error;
-    }
+    }*/
+
+
+
+	
 };
 
 /**
