@@ -9,7 +9,6 @@ const InsightService = () => (
     <div style={{ padding: '50px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <h1>인사이트 서비스</h1>
         <p>이 페이지는 현재 개발 중입니다.</p>
-        <p>빠른 시일 내에 서비스를 제공해 드리겠습니다.</p>
     </div>
 );
 
@@ -17,7 +16,6 @@ const ELearningService = () => (
     <div style={{ padding: '50px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <h1>E러닝 서비스</h1>
         <p>이 페이지는 현재 개발 중입니다.</p>
-        <p>빠른 시일 내에 서비스를 제공해 드리겠습니다.</p>
     </div>
 );
 
