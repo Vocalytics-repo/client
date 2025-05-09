@@ -48,13 +48,13 @@ function SidebarMenu() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/grammar" onClick={toggleMenu}>
-                                    문법 교정
+                                <Link to="/insights" onClick={toggleMenu}>
+                                    인사이트
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/pronunciation" onClick={toggleMenu}>
-                                    발음 교정
+                                <Link to="/elearning" onClick={toggleMenu}>
+                                    E러닝
                                 </Link>
                             </li>
                         </ul>
