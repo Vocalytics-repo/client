@@ -139,6 +139,12 @@ const useSTT = () => {
     
     // 텍스트 스트리밍 시뮬레이션
     const startTextStreaming = () => {
+
+        if (!fullTranscriptionText.current || !fullPronunciationText.current) {
+            console.warn("Cannot start streaming: transcription or correction text is empty.");
+            return;
+        }
+
         setIsStreaming(true);
         let transcriptionIndex = 0;
         let pronunciationIndex = 0;
