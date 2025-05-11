@@ -67,10 +67,27 @@ export const generateTTS = async (text) => {
         // const audioBlob = await response.blob();
         
         // 시뮬레이션 (실제로는 오디오 파일을 반환해야 함)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        /*await new Promise(resolve => setTimeout(resolve, 1000));
         console.log('TTS 생성 요청:', text);
         
         return null; // 실제 구현에서는 오디오 Blob 반환
+        */
+
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text })
+        });
+
+        if (!response.ok) {
+            throw new Error(`TTS 요청 실패: ${response.statusText}`);
+        }
+
+        const audioBlob = await response.blob();  // MP3 Blob 받아오기
+        return audioBlob;
+    
     } catch (error) {
         console.error('TTS 생성 오류:', error);
         throw error;
