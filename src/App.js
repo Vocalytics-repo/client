@@ -5,19 +5,17 @@ import STTService from './pages/STTService/STTService';
 import SidebarMenu from './components/Sidebar/SidebarMenu';
 
 // 임시 페이지 컴포넌트
-const GrammarService = () => (
+const InsightService = () => (
     <div style={{ padding: '50px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <h1>문법 교정 서비스</h1>
+        <h1>인사이트 서비스</h1>
         <p>이 페이지는 현재 개발 중입니다.</p>
-        <p>빠른 시일 내에 서비스를 제공해 드리겠습니다.</p>
     </div>
 );
 
-const PronunciationService = () => (
+const ELearningService = () => (
     <div style={{ padding: '50px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <h1>발음 교정 서비스</h1>
+        <h1>E러닝 서비스</h1>
         <p>이 페이지는 현재 개발 중입니다.</p>
-        <p>빠른 시일 내에 서비스를 제공해 드리겠습니다.</p>
     </div>
 );
 
@@ -31,8 +29,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/stt" element={<STTService />} />
-                <Route path="/grammar" element={<GrammarService />} />
-                <Route path="/pronunciation" element={<PronunciationService />} />
+                <Route path="/insights" element={<InsightService />} />
+                <Route path="/elearning" element={<ELearningService />} />
             </Routes>
         </Router>
     );
