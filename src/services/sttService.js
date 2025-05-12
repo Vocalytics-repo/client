@@ -1,9 +1,6 @@
 // STT 서비스 API 함수
 // 실제 백엔드 연동 시 사용할 API 함수들을 정의합니다.
 
-// 백엔드 API URL 정의
-const BACKEND_URL = 'https://dai3005.kro.kr';
-
 /**
  * 음성 데이터를 서버로 전송하여 STT 처리를 요청합니다.
  * @param {Blob} audioBlob - 음성 녹음 데이터
@@ -15,9 +12,9 @@ export const processAudioForSTT = async (audioBlob) => {
         const formData = new FormData();
         formData.append('audio', audioBlob, 'audio.wav');
         
-        console.log('STT 요청 시작:', `${BACKEND_URL}/api/stt`);
+        console.log('STT 요청 시작:', `${process.env.REACT_APP_BACKEND_URL}/api/stt`);
         
-	const response = await fetch(`${BACKEND_URL}/api/stt`, {
+	const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/stt`, {
 		method: "POST",
 		body: formData,
 	});
@@ -79,9 +76,9 @@ export const processAudioForSTT = async (audioBlob) => {
  */
 export const generateTTS = async (text) => {
     try {
-        console.log('TTS 요청 시작:', `${BACKEND_URL}/api/tts`, { text });
+        console.log('TTS 요청 시작:', `${process.env.REACT_APP_BACKEND_URL}/api/tts`, { text });
         
-        const response = await fetch(`${BACKEND_URL}/api/tts`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
