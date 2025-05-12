@@ -125,23 +125,59 @@ const useSTT = () => {
     // STT 처리 함수
     const processSTT = async (audioBlob) => {
         try {
+            console.log('오디오 처리 시작:', audioBlob.size, 'bytes');
             const result = await processAudioForSTT(audioBlob);
-            fullTranscriptionText.current = result.transcription;
-            fullPronunciationText.current = result.correction;
+            console.log('STT 처리 결과:', result);
+            
+            // 결과가 유효한지 확인
+            if (!result || typeof result !== 'object') {
+                throw new Error('서버에서 유효한 응답을 받지 못했습니다.');
+            }
+            
+            // 안전하게 값 할당
+            fullTranscriptionText.current = result.transcription || '';
+            fullPronunciationText.current = result.correction || '';
+            
+            console.log('처리된 텍스트: ', { 
+                transcription: fullTranscriptionText.current,
+                correction: fullPronunciationText.current 
+            });
+            
+            // 결과가 비어 있는지 확인
+            if (!fullTranscriptionText.current && !fullPronunciationText.current) {
+                console.warn('STT 결과가 비어 있습니다.');
+                setTranscriptionText('음성 인식 결과가 없습니다.');
+                setPronunciationText('발음 교정 결과가 없습니다.');
+                return;
+            }
             
             // 텍스트 스트리밍 시작
             startTextStreaming();
         } catch (error) {
             console.error('STT 처리 오류:', error);
-            setTranscriptionText('STT 처리 중 오류가 발생했습니다.');
+            setTranscriptionText('STT 처리 중 오류가 발생했습니다: ' + error.message);
+            setPronunciationText('');
+            setIsStreaming(false);
         }
     };
     
     // 텍스트 스트리밍 시뮬레이션
     const startTextStreaming = () => {
-
-        if (!fullTranscriptionText.current || !fullPronunciationText.current) {
-            console.warn("Cannot start streaming: transcription or correction text is empty.");
+        // 유효성 검증 강화
+        if (!fullTranscriptionText.current && !fullPronunciationText.current) {
+            console.warn("텍스트 스트리밍을 시작할 수 없습니다: 텍스트가 비어 있습니다.");
+            setIsStreaming(false);
+            return;
+        }
+      
+        // 즉시 텍스트 표시 (스트리밍 효과 비활성화)
+        setTranscriptionText(fullTranscriptionText.current);
+        setPronunciationText(fullPronunciationText.current);
+        
+        // 백엔드 서버 URL이 원격인 경우 스트리밍 효과를 사용하지 않고 즉시 표시
+        if (true) { // 혹은 조건을 확인하여 결정
+            console.log('텍스트 즉시 표시');
+            setIsStreaming(false);
             return;
         }
       
@@ -155,18 +191,22 @@ const useSTT = () => {
         }
         
         streamingInterval.current = setInterval(() => {
-            if (transcriptionIndex < fullTranscriptionText.current.length) {
-                setTranscriptionText(fullTranscriptionText.current.substring(0, transcriptionIndex + 1));
+            // 안전하게 문자열 처리
+            const transcription = fullTranscriptionText.current || '';
+            const pronunciation = fullPronunciationText.current || '';
+            
+            if (transcriptionIndex < transcription.length) {
+                setTranscriptionText(transcription.substring(0, transcriptionIndex + 1));
                 transcriptionIndex++;
             }
             
-            if (pronunciationIndex < fullPronunciationText.current.length) {
-                setPronunciationText(fullPronunciationText.current.substring(0, pronunciationIndex + 1));
+            if (pronunciationIndex < pronunciation.length) {
+                setPronunciationText(pronunciation.substring(0, pronunciationIndex + 1));
                 pronunciationIndex++;
             }
             
-            if (transcriptionIndex >= fullTranscriptionText.current.length && 
-                pronunciationIndex >= fullPronunciationText.current.length) {
+            if (transcriptionIndex >= transcription.length && 
+                pronunciationIndex >= pronunciation.length) {
                 clearInterval(streamingInterval.current);
                 setIsStreaming(false);
             }
@@ -176,18 +216,32 @@ const useSTT = () => {
     // TTS 발음 듣기
     const handleTTS = async () => {
         try {
-            const audioBlob = await generateTTS(pronunciationText);
-            if (audioBlob) {
-                // 오디오 재생 로직 (실제 구현에서 추가)
-                const audioUrl = URL.createObjectURL(audioBlob);
-                const audio = new Audio(audioUrl);
-                audio.play();
-            } else {
-                alert('TTS 발음 듣기 기능이 구현될 예정입니다.');
+            // 텍스트가 비어 있는지 확인
+            if (!pronunciationText || pronunciationText.trim() === '') {
+                alert('변환할 텍스트가 없습니다.');
+                return;
             }
+            
+            const audioBlob = await generateTTS(pronunciationText);
+            
+            // audioBlob이 null이거나 유효하지 않은 경우 확인
+            if (!audioBlob || !(audioBlob instanceof Blob)) {
+                throw new Error('오디오 데이터를 받지 못했습니다.');
+            }
+            
+            // 오디오 재생
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            
+            // 오디오 재생 완료 후 URL 객체 해제
+            audio.onended = () => {
+                URL.revokeObjectURL(audioUrl);
+            };
+            
+            audio.play();
         } catch (error) {
             console.error('TTS 처리 오류:', error);
-            alert('TTS 발음 듣기 중 오류가 발생했습니다.');
+            alert('TTS 발음 듣기 중 오류가 발생했습니다: ' + error.message);
         }
     };
     

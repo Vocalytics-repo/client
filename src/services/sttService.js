@@ -1,6 +1,9 @@
 // STT 서비스 API 함수
 // 실제 백엔드 연동 시 사용할 API 함수들을 정의합니다.
 
+// 백엔드 API URL 정의
+const BACKEND_URL = 'https://dai3005.kro.kr';
+
 /**
  * 음성 데이터를 서버로 전송하여 STT 처리를 요청합니다.
  * @param {Blob} audioBlob - 음성 녹음 데이터
@@ -12,41 +15,61 @@ export const processAudioForSTT = async (audioBlob) => {
         const formData = new FormData();
         formData.append('audio', audioBlob, 'audio.wav');
         
-	const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/stt`, {
+        console.log('STT 요청 시작:', `${BACKEND_URL}/api/stt`);
+        
+	const response = await fetch(`${BACKEND_URL}/api/stt`, {
 		method: "POST",
 		body: formData,
 	});
 
-        // 백엔드 API 호출 (현재는 시뮬레이션)
-        //const response = await fetch('/api/stt', {
-        //     method: 'POST',
-        //     body: formData
-        // });
+        if (!response.ok) {
+            throw new Error(`STT 요청 실패: ${response.status} ${response.statusText}`);
+        }
+
         const data = await response.json();
+        console.log('STT 서버 응답 데이터:', data); // 응답 데이터 로깅
+        
+        // 응답 데이터 유효성 검사
+        if (!data) {
+            throw new Error('서버에서 유효한 응답을 받지 못했습니다.');
+        }
+        
+        // 서버 응답 형식이 다를 경우를 처리
+        let transcription = '';
+        let correction = '';
+        
+        // 서버가 다른 속성명을 사용하는지 확인
+        if (data.transcription !== undefined) {
+            transcription = data.transcription;
+        } else if (data.text !== undefined) {
+            transcription = data.text;
+        } else if (data.transcript !== undefined) {
+            transcription = data.transcript;
+        }
+        
+        if (data.correction !== undefined) {
+            correction = data.correction;
+        } else if (data.pronunciation !== undefined) {
+            correction = data.pronunciation;
+        } else if (data.correctionResult !== undefined) {
+            correction = data.correctionResult;
+        }
+        
+        console.log('정리된 데이터:', { transcription, correction });
+        
+        // transcription과 correction이 없는 경우 기본값 설정
         return {
-		transcription: data.transcription,
-		correction: data.correction,
-	};
+            transcription: transcription || '',
+            correction: correction || '',
+        };
     } catch (error) {
 	    console.error("STT 처리 오류:", error);
-	    throw error;
+	    // 오류가 발생해도 기본값 반환
+	    return {
+	        transcription: '',
+	        correction: '음성 인식 처리 중 오류가 발생했습니다: ' + error.message,
+	    };
     }
-        // 시뮬레이션된 응답
-        /* await new Promise(resolve => setTimeout(resolve, 2000));
-        const simulatedData = {
-            transcription: '반갑습니다. 오늘은 좋은 하루입니다. 한국어 전사 결과가 여기에 스트리밍됩니다.',
-            correction: '반갑습니다. 오늘은 조은 하루입니다. → 반갑습니다. 오늘은 좋은 하루입니다.'
-        };
-        
-        return simulatedData;
-    } catch (error) {
-        console.error('STT 처리 오류:', error);
-        throw error;
-    }*/
-
-
-
-	
 };
 
 /**
@@ -56,24 +79,9 @@ export const processAudioForSTT = async (audioBlob) => {
  */
 export const generateTTS = async (text) => {
     try {
-        // 실제 구현에서는 백엔드 API 호출
-        // const response = await fetch('/api/tts', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ text })
-        // });
-        // const audioBlob = await response.blob();
+        console.log('TTS 요청 시작:', `${BACKEND_URL}/api/tts`, { text });
         
-        // 시뮬레이션 (실제로는 오디오 파일을 반환해야 함)
-        /*await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log('TTS 생성 요청:', text);
-        
-        return null; // 실제 구현에서는 오디오 Blob 반환
-        */
-
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tts`, {
+        const response = await fetch(`${BACKEND_URL}/api/tts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -82,10 +90,20 @@ export const generateTTS = async (text) => {
         });
 
         if (!response.ok) {
+            console.error(`TTS 요청 실패: ${response.status} ${response.statusText}`);
+            const errorBody = await response.text().catch(() => '');
+            console.error('오류 응답 내용:', errorBody);
             throw new Error(`TTS 요청 실패: ${response.statusText}`);
         }
 
+        console.log('TTS 응답 받음, Content-Type:', response.headers.get('content-type'));
         const audioBlob = await response.blob();  // MP3 Blob 받아오기
+        console.log('오디오 Blob 크기:', audioBlob.size, 'bytes');
+        
+        if (audioBlob.size === 0) {
+            throw new Error('서버에서 빈 오디오 데이터를 반환했습니다.');
+        }
+        
         return audioBlob;
     
     } catch (error) {
