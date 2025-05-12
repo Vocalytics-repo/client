@@ -144,7 +144,7 @@ const useSTT = () => {
             console.warn("Cannot start streaming: transcription or correction text is empty.");
             return;
         }
-        
+      
         setIsStreaming(true);
         let transcriptionIndex = 0;
         let pronunciationIndex = 0;
