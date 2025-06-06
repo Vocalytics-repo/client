@@ -71,7 +71,7 @@
 .search-section {
     margin-bottom: 1rem; /* margin 줄임 */
     position: relative;
-    z-index: 1;
+    z-index: 1100; /* z-index를 높여서 영상 카드들 위에 표시 */
     flex-shrink: 0; /* 검색 섹션 크기 고정 */
 }
 
