@@ -12,16 +12,23 @@ export const searchVideos = async (query = '한국어 교육') => {
     try {
         console.log('YouTube 검색 요청:', query);
         
-        const response = await fetch(`${API_BASE_URL}/youtube/search?q=${encodeURIComponent(query)}`);
+        const response = await fetch(`http://localhost:8000/youtube/search?q=${encodeURIComponent(query)}`);
         
         if (!response.ok) {
             throw new Error(`검색 요청 실패: ${response.status} ${response.statusText}`);
         }
         
-        const data = await response.json();
-        console.log('YouTube 검색 결과:', data);
+        const result = await response.json();
+        console.log('YouTube 검색 응답:', result);
         
-        return data.videos || [];
+        // API 응답 구조에 맞게 수정
+        if (result.success && result.data) {
+            console.log('YouTube 검색 결과 영상 수:', result.data.length);
+            return result.data;
+        } else {
+            console.warn('예상과 다른 응답 형식:', result);
+            return [];
+        }
     } catch (error) {
         console.error('YouTube 검색 오류:', error);
         throw error;
@@ -37,7 +44,7 @@ export const searchVideosWithOptions = async (searchOptions) => {
     try {
         console.log('YouTube 상세 검색 요청:', searchOptions);
         
-        const response = await fetch(`${API_BASE_URL}/youtube/search`, {
+        const response = await fetch(`http://localhost:8000/youtube/search`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,10 +56,17 @@ export const searchVideosWithOptions = async (searchOptions) => {
             throw new Error(`상세 검색 요청 실패: ${response.status} ${response.statusText}`);
         }
         
-        const data = await response.json();
-        console.log('YouTube 상세 검색 결과:', data);
+        const result = await response.json();
+        console.log('YouTube 상세 검색 응답:', result);
         
-        return data.videos || [];
+        // API 응답 구조에 맞게 수정
+        if (result.success && result.data) {
+            console.log('YouTube 상세 검색 결과 영상 수:', result.data.length);
+            return result.data;
+        } else {
+            console.warn('예상과 다른 응답 형식:', result);
+            return [];
+        }
     } catch (error) {
         console.error('YouTube 상세 검색 오류:', error);
         throw error;
@@ -68,16 +82,22 @@ export const getVideoDetails = async (videoId) => {
     try {
         console.log('YouTube 영상 상세 정보 요청:', videoId);
         
-        const response = await fetch(`${API_BASE_URL}/youtube/video/${videoId}`);
+        const response = await fetch(`http://localhost:8000/youtube/video/${videoId}`);
         
         if (!response.ok) {
             throw new Error(`영상 정보 요청 실패: ${response.status} ${response.statusText}`);
         }
         
-        const data = await response.json();
-        console.log('YouTube 영상 상세 정보:', data);
+        const result = await response.json();
+        console.log('YouTube 영상 상세 정보 응답:', result);
         
-        return data;
+        // API 응답 구조에 맞게 수정
+        if (result.success && result.data) {
+            return result.data;
+        } else {
+            console.warn('예상과 다른 응답 형식:', result);
+            return {};
+        }
     } catch (error) {
         console.error('YouTube 영상 정보 조회 오류:', error);
         throw error;
@@ -90,7 +110,7 @@ export const getVideoDetails = async (videoId) => {
  */
 export const checkYouTubeServiceHealth = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/youtube/health`);
+        const response = await fetch(`http://localhost:8000/youtube/health`);
         
         if (!response.ok) {
             throw new Error(`서비스 상태 확인 실패: ${response.status} ${response.statusText}`);
