@@ -44,12 +44,24 @@ export const searchVideosWithOptions = async (searchOptions) => {
     try {
         console.log('YouTube 상세 검색 요청:', searchOptions);
         
+        // 페이징 파라미터 추가
+        const requestBody = {
+            query: searchOptions.query || '한국어 교육',
+            max_results: searchOptions.max_results || 12,
+            order: searchOptions.order || 'relevance',
+            published_after: searchOptions.published_after || null,
+            duration: searchOptions.duration || null,
+            offset: searchOptions.offset || 0  // 페이징을 위한 offset 추가
+        };
+        
+        console.log('요청 본문:', requestBody);
+        
         const response = await fetch(`http://localhost:8000/youtube/search`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(searchOptions)
+            body: JSON.stringify(requestBody)
         });
         
         if (!response.ok) {
@@ -62,10 +74,19 @@ export const searchVideosWithOptions = async (searchOptions) => {
         // API 응답 구조에 맞게 수정
         if (result.success && result.data) {
             console.log('YouTube 상세 검색 결과 영상 수:', result.data.length);
-            return result.data;
+            console.log('총 결과 수:', result.total_results);
+            return {
+                videos: result.data,
+                total_results: result.total_results || 0,
+                has_more: result.data.length === requestBody.max_results
+            };
         } else {
             console.warn('예상과 다른 응답 형식:', result);
-            return [];
+            return {
+                videos: [],
+                total_results: 0,
+                has_more: false
+            };
         }
     } catch (error) {
         console.error('YouTube 상세 검색 오류:', error);
