@@ -38,7 +38,7 @@
 }
 
 /* 페이지 헤더 */
-.page-header {
+.elearning-page-header {
     text-align: center;
     margin-bottom: 2rem;
     margin-left: -3rem; /* 왼쪽 패딩을 상쇄하여 정확히 중앙에 위치 */

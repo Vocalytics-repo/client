@@ -36,7 +36,7 @@ const ELearning = () => {
 
     return (
         <div className="elearning-container">
-            <header className="page-header">
+            <header className="elearning-page-header">
                 <h1>한국어 교육 E러닝</h1>
                 <p>YouTube의 다양한 한국어 교육 영상으로 학습하세요</p>
             </header>
