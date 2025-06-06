@@ -35,7 +35,8 @@
     top: 0;
     left: 0;
     width: 280px;               /* 사이드바 너비 */
-    height: 100%;
+    height: 100vh;              /* 뷰포트 높이에 맞춤 */
+    max-height: 100vh;          /* 최대 높이 제한 */
     background-color: #ffffff;  /* 배경색 */
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
     transform: translateX(-100%); /* 초기 상태: 화면 밖 */
@@ -43,6 +44,7 @@
     z-index: 1000;             /* 화면 위에 표시 */
     display: flex;
     flex-direction: column;
+    overflow: hidden;          /* 사이드바 자체 스크롤바 제거 */
 }
 
 /* 사이드바가 열렸을 때 슬라이드 인 */
@@ -57,6 +59,28 @@
     height: 100%;
     position: relative;
     padding: 15px 0;
+    overflow-y: auto;          /* 사이드바 내부에만 스크롤 허용 */
+    scrollbar-width: thin;     /* Firefox에서 스크롤바 얇게 */
+    scrollbar-color: #c1c1c1 #f1f1f1; /* Firefox 스크롤바 색상 */
+}
+
+/* 사이드바 내부 스크롤바 스타일링 (Webkit) */
+.sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }
 
 /* 닫기 버튼 */
@@ -144,5 +168,37 @@
 @media (max-width: 768px) {
     .sidebar-menu {
         width: 250px;
+        height: 100vh;
+        max-height: 100vh;
+    }
+    
+    .hamburger {
+        top: 15px;
+        left: 15px;
+        width: 25px;
+        height: 20px;
+    }
+    
+    .hamburger .bar {
+        height: 2.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-menu {
+        width: 220px;
+        height: 100vh;
+        max-height: 100vh;
+    }
+    
+    .hamburger {
+        top: 12px;
+        left: 12px;
+        width: 22px;
+        height: 18px;
+    }
+    
+    .hamburger .bar {
+        height: 2px;
     }
 }
