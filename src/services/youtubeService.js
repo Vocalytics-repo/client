@@ -12,7 +12,7 @@ export const searchVideos = async (query = '한국어 교육') => {
     try {
         console.log('YouTube 검색 요청:', query);
         
-        const response = await fetch(`http://localhost:8000/youtube/search?q=${encodeURIComponent(query)}`);
+        const response = await fetch(`${API_BASE_URL}/youtube/search?q=${encodeURIComponent(query)}`);
         
         if (!response.ok) {
             throw new Error(`검색 요청 실패: ${response.status} ${response.statusText}`);
@@ -56,7 +56,7 @@ export const searchVideosWithOptions = async (searchOptions) => {
         
         console.log('요청 본문:', requestBody);
         
-        const response = await fetch(`http://localhost:8000/youtube/search`, {
+        const response = await fetch(`${API_BASE_URL}/youtube/search`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ export const getVideoDetails = async (videoId) => {
     try {
         console.log('YouTube 영상 상세 정보 요청:', videoId);
         
-        const response = await fetch(`http://localhost:8000/youtube/video/${videoId}`);
+        const response = await fetch(`${API_BASE_URL}/youtube/video/${videoId}`);
         
         if (!response.ok) {
             throw new Error(`영상 정보 요청 실패: ${response.status} ${response.statusText}`);
@@ -131,7 +131,7 @@ export const getVideoDetails = async (videoId) => {
  */
 export const checkYouTubeServiceHealth = async () => {
     try {
-        const response = await fetch(`http://localhost:8000/youtube/health`);
+        const response = await fetch(`${API_BASE_URL}/youtube/health`);
         
         if (!response.ok) {
             throw new Error(`서비스 상태 확인 실패: ${response.status} ${response.statusText}`);
