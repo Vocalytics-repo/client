@@ -1,0 +1,252 @@
+/* src/components/VideoPlayer/VideoPlayer.css */
+
+.video-player-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    padding: 1rem;
+    backdrop-filter: blur(5px);
+    overflow: hidden; /* 외부 스크롤바 제거 */
+}
+
+.video-player-container {
+    background-color: white;
+    border-radius: 20px;
+    max-width: min(75vw, 1000px);
+    width: 100%;
+    max-height: 80vh;
+    height: auto;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.video-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2rem 2rem 1rem 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.video-player-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: #666;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.video-embed-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 비율 */
+    background-color: #000;
+}
+
+.video-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-details {
+    padding: 2rem;
+}
+
+.video-info-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.channel-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6c90ba;
+}
+
+.publish-date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.video-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.youtube-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ff0000;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.youtube-link:hover {
+    background-color: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
+.video-description {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 1.5rem;
+}
+
+.video-description h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.video-description p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .video-player-overlay {
+        padding: 0.5rem;
+    }
+    
+    .video-player-container {
+        max-height: 85vh;
+        max-width: 90vw;
+        border-radius: 16px;
+    }
+    
+    .video-player-header {
+        padding: 1rem 1rem 0.75rem 1rem;
+    }
+    
+    .video-player-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .video-details {
+        padding: 1rem;
+    }
+    
+    .video-info-section {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+    
+    .youtube-link {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-player-overlay {
+        padding: 0.25rem;
+    }
+    
+    .video-player-container {
+        max-height: 90vh;
+        max-width: 95vw;
+        border-radius: 12px;
+    }
+    
+    .video-player-header {
+        padding: 0.75rem;
+    }
+    
+    .video-player-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .video-details {
+        padding: 0.75rem;
+    }
+    
+    .youtube-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .video-description h4 {
+        font-size: 1rem;
+    }
+}
+
+/* 스크롤바 스타일링 */
+.video-player-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.video-player-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.video-player-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.video-player-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+} 
