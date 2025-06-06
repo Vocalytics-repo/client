@@ -26,11 +26,21 @@ const ELearning = () => {
         refreshVideos
     } = useELearning();
 
+    console.log('ELearning 렌더링:', {
+        videosCount: videos.length,
+        loading,
+        error,
+        searchQuery,
+        hasMore
+    });
+
     const handleSearchSubmit = (query) => {
+        console.log('검색 제출:', query);
         handleSearch(query, true);
     };
 
     const handleLoadMore = () => {
+        console.log('더 보기 클릭');
         loadMoreVideos();
     };
 
@@ -101,14 +111,18 @@ const ELearning = () => {
                         </div>
 
                         <div className="videos-grid">
-                            {videos.map((video, index) => (
-                                <VideoCard
-                                    key={`${video.video_id}-${index}`}
-                                    video={video}
-                                    onVideoSelect={selectVideo}
-                                    isSelected={selectedVideo?.video_id === video.video_id}
-                                />
-                            ))}
+                            {console.log('videos-grid 렌더링, videos 배열:', videos)}
+                            {videos.map((video, index) => {
+                                console.log(`VideoCard ${index} 렌더링:`, video);
+                                return (
+                                    <VideoCard
+                                        key={`${video.video_id}-${index}`}
+                                        video={video}
+                                        onVideoSelect={selectVideo}
+                                        isSelected={selectedVideo?.video_id === video.video_id}
+                                    />
+                                );
+                            })}
                         </div>
 
                         {hasMore && (
