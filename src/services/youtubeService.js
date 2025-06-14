@@ -1,7 +1,7 @@
 // YouTube API 서비스 함수들
 // 한국어 교육 영상 검색 및 관리를 위한 API 함수들을 정의합니다.
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+const API_BASE_URL = 'http://localhost:8000';
 
 /**
  * 간단한 YouTube 영상 검색
