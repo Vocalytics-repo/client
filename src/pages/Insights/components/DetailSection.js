@@ -73,12 +73,12 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
         <div className="detail-content">
             <h2>
                 <span className="card-icon">👥</span>
-                성별 발음 성과 분석
+                성별에 따른 발음 성과 분석
             </h2>
             
             <div className="comparison-stats">
                 <div className="comparison-item male">
-                    <h3>👨 남성</h3>
+                    <h3>남성</h3>
                     <div className="stats-grid">
                         <div className="stat-item">
                             <span className="stat-value">{formatNumber(data.male.count)}</span>
@@ -96,7 +96,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
                 </div>
                 
                 <div className="comparison-item female">
-                    <h3>👩 여성</h3>
+                    <h3>여성</h3>
                     <div className="stats-grid">
                         <div className="stat-item">
                             <span className="stat-value">{formatNumber(data.female.count)}</span>
@@ -253,31 +253,36 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     );
 
     // 기본 렌더링 (다른 탭들을 위한 간단한 구현)
-    const renderLevelAnalysis = (data) => (
-        <div className="detail-content">
-            <h2>
-                <span className="card-icon">📈</span>
-                레벨별 성과 분석
-            </h2>
-            <div className="simple-stats">
-                {Object.entries(data.level_stats || {}).map(([level, stats]) => (
-                    <div key={level} className="level-item">
-                        <h3>{level} 레벨</h3>
-                        <div className="stats-grid">
-                            <div className="stat-item">
-                                <span className="stat-value">{formatNumber(stats.count)}</span>
-                                <span className="stat-label">샘플 수</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-value">{formatPercent(stats.avg_error_rate)}</span>
-                                <span className="stat-label">평균 오류율</span>
+    const renderLevelAnalysis = (data) => {
+        // 레벨을 A, B, C 순서로 정렬
+        const sortedLevels = Object.entries(data.level_stats || {}).sort(([a], [b]) => a.localeCompare(b));
+        
+        return (
+            <div className="detail-content">
+                <h2>
+                    <span className="card-icon">📈</span>
+                    한국어 수준별 발음 성과 분석
+                </h2>
+                <div className="simple-stats">
+                    {sortedLevels.map(([level, stats]) => (
+                        <div key={level} className="level-item">
+                            <h3>{level} 레벨</h3>
+                            <div className="stats-grid">
+                                <div className="stat-item">
+                                    <span className="stat-value">{formatNumber(stats.count)}</span>
+                                    <span className="stat-label">샘플 수</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{formatPercent(stats.avg_error_rate)}</span>
+                                    <span className="stat-label">평균 오류율</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
-    );
+        );
+    };
 
     const renderTypeAnalysis = (data) => (
         <div className="detail-content">
