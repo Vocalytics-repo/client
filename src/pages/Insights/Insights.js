@@ -85,20 +85,22 @@ const Insights = () => {
                 />
             )}
 
+            {/* 탭 네비게이션 - 페이지 헤더 바로 아래 */}
+            <TabNavigation 
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+            />
+
             {/* 메인 콘텐츠 */}
             <div className="insights-content">
-                {/* 개요 섹션 - 항상 표시 */}
-                <OverviewSection 
-                    data={overview}
-                    loading={overviewLoading}
-                    onRefresh={refreshAllData}
-                />
-
-                {/* 탭 네비게이션 */}
-                <TabNavigation 
-                    activeTab={activeTab}
-                    onTabChange={handleTabChange}
-                />
+                {/* 개요 섹션 - overview 탭일 때만 표시 */}
+                {activeTab === 'overview' && (
+                    <OverviewSection 
+                        data={overview}
+                        loading={overviewLoading}
+                        onRefresh={refreshAllData}
+                    />
+                )}
 
                 {/* 필터 섹션 - 필터가 필요한 탭에서만 표시 */}
                 {(activeTab === 'gender' || activeTab === 'csid') && (
