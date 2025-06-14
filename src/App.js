@@ -3,15 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import STTService from './pages/STTService/STTService';
 import ELearning from './pages/ELearning/ELearning';
+import Insights from './pages/Insights/Insights';
 import SidebarMenu from './components/Sidebar/SidebarMenu';
 
-// 임시 페이지 컴포넌트
-const InsightService = () => (
-    <div style={{ padding: '50px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <h1>인사이트 서비스</h1>
-        <p>이 페이지는 현재 개발 중입니다.</p>
-    </div>
-);
+// 임시 페이지 컴포넌트는 더 이상 필요하지 않음 (Insights 컴포넌트로 대체)
 
 function App() {
     return (
@@ -23,7 +18,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/stt" element={<STTService />} />
-                <Route path="/insights" element={<InsightService />} />
+                <Route path="/insights" element={<Insights />} />
                 <Route path="/elearning" element={<ELearning />} />
             </Routes>
         </Router>
