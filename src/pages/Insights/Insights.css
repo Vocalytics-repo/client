@@ -326,7 +326,7 @@
 .tab-navigation {
     position: relative;
     z-index: 1;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0 2rem 0; /* 상단과 하단 여백 추가 */
 }
 
 .tab-container {
