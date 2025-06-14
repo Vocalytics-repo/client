@@ -20,8 +20,7 @@ const FilterSection = ({ filters, onFilterChange, activeTab }) => {
     const levelOptions = [
         { value: '', label: '전체 레벨' },
         { value: 'A', label: 'A 레벨' },
-        { value: 'B', label: 'B 레벨' },
-        { value: 'C', label: 'C 레벨' }
+        { value: 'B', label: 'B 레벨' }
     ];
 
 
