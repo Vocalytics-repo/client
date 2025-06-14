@@ -15,7 +15,7 @@ const Insights = () => {
         // 데이터
         overview,
         genderPerformance,
-        nationalityAnalysis,
+
         levelPerformance,
         csidPatterns,
         typePerformance,
@@ -44,8 +44,7 @@ const Insights = () => {
                 return overview;
             case 'gender':
                 return genderPerformance;
-            case 'nationality':
-                return nationalityAnalysis;
+            
             case 'level':
                 return levelPerformance;
             case 'csid':

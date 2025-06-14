@@ -66,64 +66,7 @@ export const getGenderPerformance = async (filters = {}) => {
     }
 };
 
-/**
- * 국적별 발음 특성 분석 조회 (전체)
- * @returns {Promise<Object>} - 국적별 분석 데이터
- */
-export const getNationalityAnalysis = async () => {
-    try {
-        console.log('국적별 분석 요청');
-        
-        const response = await fetch(`${API_BASE_URL}/api/insights/nationality-analysis`);
-        
-        if (!response.ok) {
-            throw new Error(`국적별 분석 요청 실패: ${response.status} ${response.statusText}`);
-        }
-        
-        const result = await response.json();
-        console.log('국적별 분석 응답:', result);
-        
-        if (result.success && result.data) {
-            return result.data;
-        } else {
-            console.warn('예상과 다른 응답 형식:', result);
-            return null;
-        }
-    } catch (error) {
-        console.error('국적별 분석 오류:', error);
-        throw error;
-    }
-};
 
-/**
- * 특정 국적 분석 조회
- * @param {string} nationality - 분석할 국적
- * @returns {Promise<Object>} - 특정 국적 분석 데이터
- */
-export const getSpecificNationalityAnalysis = async (nationality) => {
-    try {
-        console.log('특정 국적 분석 요청:', nationality);
-        
-        const response = await fetch(`${API_BASE_URL}/api/insights/nationality-analysis/${nationality}`);
-        
-        if (!response.ok) {
-            throw new Error(`특정 국적 분석 요청 실패: ${response.status} ${response.statusText}`);
-        }
-        
-        const result = await response.json();
-        console.log('특정 국적 분석 응답:', result);
-        
-        if (result.success && result.data) {
-            return result.data;
-        } else {
-            console.warn('예상과 다른 응답 형식:', result);
-            return null;
-        }
-    } catch (error) {
-        console.error('특정 국적 분석 오류:', error);
-        throw error;
-    }
-};
 
 /**
  * 레벨별 성과 분석 조회 (전체)
@@ -165,7 +108,7 @@ export const getCSIDPatterns = async (filters = {}) => {
         
         const params = new URLSearchParams();
         if (filters.sex) params.append('sex', filters.sex);
-        if (filters.nationality) params.append('nationality', filters.nationality);
+
         if (filters.level) params.append('level', filters.level);
         
         const response = await fetch(`${API_BASE_URL}/api/insights/csid-patterns?${params}`);

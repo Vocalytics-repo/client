@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import {
     getInsightOverview,
     getGenderPerformance,
-    getNationalityAnalysis,
     getLevelPerformance,
     getCSIDPatterns,
     getTypePerformance,
@@ -16,7 +15,7 @@ const useInsights = () => {
     
     // 세부 분석 데이터
     const [genderPerformance, setGenderPerformance] = useState(null);
-    const [nationalityAnalysis, setNationalityAnalysis] = useState(null);
+
     const [levelPerformance, setLevelPerformance] = useState(null);
     const [csidPatterns, setCSIDPatterns] = useState(null);
     const [typePerformance, setTypePerformance] = useState(null);
@@ -39,7 +38,7 @@ const useInsights = () => {
     // 필터 상태
     const [filters, setFilters] = useState({
         level: '',
-        nationality: '',
+
         sex: ''
     });
 
@@ -99,25 +98,7 @@ const useInsights = () => {
         }
     }, []);
 
-    // 국적별 분석 데이터 로드
-    const loadNationalityAnalysis = useCallback(async () => {
-        setDetailLoading(true);
-        
-        try {
-            console.log('국적별 분석 데이터 로드 시작');
-            const data = await getNationalityAnalysis();
-            
-            if (data) {
-                setNationalityAnalysis(data);
-                console.log('국적별 분석 데이터 로드 완료:', data);
-            }
-        } catch (err) {
-            console.error('국적별 분석 데이터 로드 오류:', err);
-            setError('국적별 분석 데이터를 불러오는 중 오류가 발생했습니다.');
-        } finally {
-            setDetailLoading(false);
-        }
-    }, []);
+
 
     // 레벨별 성과 데이터 로드
     const loadLevelPerformance = useCallback(async () => {
@@ -221,9 +202,7 @@ const useInsights = () => {
                 case 'gender':
                     await loadGenderPerformance(filters);
                     break;
-                case 'nationality':
-                    await loadNationalityAnalysis();
-                    break;
+                
                 case 'level':
                     await loadLevelPerformance();
                     break;
@@ -246,7 +225,7 @@ const useInsights = () => {
             setLoading(false);
         }
     }, [activeTab, filters, checkServiceHealth, loadOverview, loadGenderPerformance, 
-        loadNationalityAnalysis, loadLevelPerformance, loadCSIDPatterns, 
+        loadLevelPerformance, loadCSIDPatterns, 
         loadTypePerformance, loadTextDifficulty]);
 
     // 탭 변경 핸들러
@@ -263,11 +242,7 @@ const useInsights = () => {
                     await loadGenderPerformance(filters);
                 }
                 break;
-            case 'nationality':
-                if (!nationalityAnalysis) {
-                    await loadNationalityAnalysis();
-                }
-                break;
+
             case 'level':
                 if (!levelPerformance) {
                     await loadLevelPerformance();
@@ -291,9 +266,9 @@ const useInsights = () => {
             default:
                 break;
         }
-    }, [activeTab, filters, genderPerformance, nationalityAnalysis, levelPerformance,
+    }, [activeTab, filters, genderPerformance, levelPerformance,
         csidPatterns, typePerformance, textDifficulty, loadGenderPerformance,
-        loadNationalityAnalysis, loadLevelPerformance, loadCSIDPatterns,
+        loadLevelPerformance, loadCSIDPatterns,
         loadTypePerformance, loadTextDifficulty]);
 
     // 필터 변경 핸들러
@@ -336,7 +311,7 @@ const useInsights = () => {
         // 데이터
         overview,
         genderPerformance,
-        nationalityAnalysis,
+
         levelPerformance,
         csidPatterns,
         typePerformance,
@@ -360,7 +335,6 @@ const useInsights = () => {
         // 개별 로드 함수들
         loadOverview,
         loadGenderPerformance,
-        loadNationalityAnalysis,
         loadLevelPerformance,
         loadCSIDPatterns,
         loadTypePerformance,

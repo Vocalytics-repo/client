@@ -594,74 +594,7 @@
     color: #666;
 }
 
-/* 국적별 랭킹 */
-.nationality-ranking {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    overflow: visible; /* 내부 스크롤 제거 */
-}
 
-.ranking-section h3 {
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
-    color: #333;
-}
-
-.ranking-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-.ranking-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background: rgba(248, 250, 255, 0.8);
-    border-radius: 8px;
-    border-left: 4px solid;
-}
-
-.ranking-item.best {
-    border-left-color: #4CAF50;
-}
-
-.ranking-item.worst {
-    border-left-color: #FF9800;
-}
-
-.rank {
-    font-size: 1.1rem;
-    font-weight: 700;
-    min-width: 30px;
-}
-
-.ranking-item.best .rank {
-    color: #4CAF50;
-}
-
-.ranking-item.worst .rank {
-    color: #FF9800;
-}
-
-.nationality-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
-
-.nationality-name {
-    font-weight: 600;
-    color: #333;
-}
-
-.nationality-stats {
-    font-size: 0.9rem;
-    color: #666;
-}
 
 @media (max-width: 480px) {
     .insights-container {
@@ -719,8 +652,5 @@
         gap: 1rem;
     }
     
-    .nationality-ranking {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
+
 } 

@@ -53,8 +53,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
         switch (activeTab) {
             case 'gender':
                 return renderGenderAnalysis(data);
-            case 'nationality':
-                return renderNationalityAnalysis(data);
+            
             case 'level':
                 return renderLevelAnalysis(data);
             case 'csid':
@@ -131,53 +130,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
         </div>
     );
 
-    // 국적별 분석 렌더링
-    const renderNationalityAnalysis = (data) => (
-        <div className="detail-content">
-            <h2>
-                <span className="card-icon">🌍</span>
-                국적별 발음 특성 분석
-            </h2>
-            
-            <div className="nationality-ranking">
-                <div className="ranking-section">
-                    <h3>🏆 성과 우수 국적 TOP 5</h3>
-                    <div className="ranking-list">
-                        {data.ranking.best_performance.slice(0, 5).map(([nationality, stats], index) => (
-                            <div key={nationality} className="ranking-item best">
-                                <div className="rank">#{index + 1}</div>
-                                <div className="nationality-info">
-                                    <span className="nationality-name">{nationality}</span>
-                                    <span className="nationality-stats">
-                                        오류율: {formatPercent(stats.avg_error_rate)} 
-                                        ({formatNumber(stats.count)}명)
-                                    </span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
 
-                <div className="ranking-section">
-                    <h3>📈 개선 필요 국적 TOP 5</h3>
-                    <div className="ranking-list">
-                        {data.ranking.worst_performance.slice(0, 5).map(([nationality, stats], index) => (
-                            <div key={nationality} className="ranking-item worst">
-                                <div className="rank">#{index + 1}</div>
-                                <div className="nationality-info">
-                                    <span className="nationality-name">{nationality}</span>
-                                    <span className="nationality-stats">
-                                        오류율: {formatPercent(stats.avg_error_rate)} 
-                                        ({formatNumber(stats.count)}명)
-                                    </span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
 
     // CSID 분석 렌더링
     const renderCSIDAnalysis = (data) => (

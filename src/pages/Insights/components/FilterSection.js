@@ -12,7 +12,6 @@ const FilterSection = ({ filters, onFilterChange, activeTab }) => {
     const clearFilters = () => {
         onFilterChange({
             level: '',
-            nationality: '',
             sex: ''
         });
     };
@@ -25,12 +24,7 @@ const FilterSection = ({ filters, onFilterChange, activeTab }) => {
         { value: 'C', label: 'C 레벨' }
     ];
 
-    const nationalityOptions = [
-        { value: '', label: '전체 국적' },
-        { value: 'Chinese', label: '중국' },
-        { value: 'American', label: '미국' },
-        { value: 'Spanish', label: '스페인' }
-    ];
+
 
     const sexOptions = [
         { value: '', label: '전체 성별' },
@@ -67,21 +61,7 @@ const FilterSection = ({ filters, onFilterChange, activeTab }) => {
                     </select>
                 </div>
 
-                {/* 국적 필터 */}
-                <div className="filter-group">
-                    <label className="filter-label">국적</label>
-                    <select
-                        className="filter-select"
-                        value={filters.nationality}
-                        onChange={(e) => handleFilterUpdate('nationality', e.target.value)}
-                    >
-                        {nationalityOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                
 
                 {/* 성별 필터 - CSID 탭에서만 표시 */}
                 {activeTab === 'csid' && (
@@ -104,7 +84,7 @@ const FilterSection = ({ filters, onFilterChange, activeTab }) => {
 
             {/* 현재 적용된 필터 표시 */}
             <div className="active-filters">
-                {(filters.level || filters.nationality || filters.sex) && (
+                {(filters.level || filters.sex) && (
                     <div className="active-filters-list">
                         <span className="active-filters-label">적용된 필터:</span>
                         {filters.level && (
@@ -118,17 +98,7 @@ const FilterSection = ({ filters, onFilterChange, activeTab }) => {
                                 </button>
                             </span>
                         )}
-                        {filters.nationality && (
-                            <span className="filter-tag">
-                                국적: {nationalityOptions.find(opt => opt.value === filters.nationality)?.label}
-                                <button 
-                                    className="remove-filter"
-                                    onClick={() => handleFilterUpdate('nationality', '')}
-                                >
-                                    ×
-                                </button>
-                            </span>
-                        )}
+
                         {filters.sex && (
                             <span className="filter-tag">
                                 성별: {sexOptions.find(opt => opt.value === filters.sex)?.label}

@@ -97,7 +97,7 @@ const OverviewSection = ({ data, loading, onRefresh }) => {
                 </div>
                 <div className="stat-item">
                     <span className="stat-value">{formatNumber(data.summary.data_coverage.nationalities)}</span>
-                    <span className="stat-label">분석 국적 수</span>
+                    <span className="stat-label">분석 사용자 수</span>
                 </div>
             </div>
 

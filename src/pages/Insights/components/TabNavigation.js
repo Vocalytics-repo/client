@@ -4,7 +4,7 @@ const TabNavigation = ({ activeTab, onTabChange }) => {
     const tabs = [
         { id: 'overview', label: '전체 개요', icon: '📊' },
         { id: 'gender', label: '성별에 따른 발음 분석', icon: '👥'},
-        { id: 'nationality', label: '국적별 분석', icon: '🌍' },
+    
         { id: 'level', label: '한국어 수준별 분석', icon: '📈'},
         { id: 'csid', label: 'CSID 패턴', icon: '🔍' },
         { id: 'type', label: '타입별 성과', icon: '📝' },
