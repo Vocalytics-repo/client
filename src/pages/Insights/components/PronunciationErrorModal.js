@@ -7,6 +7,7 @@ const PronunciationErrorModal = ({ isOpen, onClose, refText }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
     // 퍼센트 포맷팅 함수
     const formatPercent = (value) => {
         if (value > 1) {
@@ -28,7 +29,7 @@ const PronunciationErrorModal = ({ isOpen, onClose, refText }) => {
         
         try {
             const response = await fetch(
-                `http://localhost:8000/api/insights/pronunciation-errors?ref_text=${encodeURIComponent(text)}&limit=50`
+                `${API_BASE_URL}/api/insights/pronunciation-errors?ref_text=${encodeURIComponent(text)}&limit=50`
             );
             const result = await response.json();
             
