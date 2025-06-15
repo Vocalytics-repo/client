@@ -257,7 +257,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     const renderTextAnalysis = (data) => (
         <div className="detail-content">
             <h2>
-                텍스트 난이도 분석
+                발음 난이도 분석
             </h2>
             <div className="text-difficulty">
                 <div className="difficulty-overview">
@@ -270,16 +270,15 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
                 </div>
                 
                 <div className="summary-section">
-                    <h3>가장 어려운 텍스트</h3>
+                    <h3>가장 어려운 발음</h3>
                     <div className="difficult-texts">
-                        {(data.hardest_texts || []).slice(0, 5).map((text, index) => (
+                        {(data.hardest_texts || []).slice(0, 10).map((text, index) => (
                             <div key={index} className="difficult-text-item">
                                 <div className="text-rank">#{index + 1}</div>
                                 <div className="text-content">
                                     <div className="text-value">"{text.text}"</div>
                                     <div className="text-stats">
                                         오류율: {formatPercent(text.avg_error_rate)} 
-                                        ({formatNumber(text.sample_count)}개 샘플)
                                     </div>
                                 </div>
                             </div>
