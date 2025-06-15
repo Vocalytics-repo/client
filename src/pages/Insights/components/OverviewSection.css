@@ -1,5 +1,33 @@
 /* src/pages/Insights/components/OverviewSection.css */
 
+/* 인사이트 카드 헤더 */
+.insight-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.insight-card-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.overview-refresh-button {
+    flex-shrink: 0;
+}
+
+.retry-refresh-button {
+    margin-top: 1.5rem;
+}
+
 /* CSID 분포 차트 */
 .csid-distribution {
     width: 100%;
@@ -185,17 +213,19 @@
 }
 
 .text-value {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     color: #ffffff;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    line-height: 1.5;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
 }
 
 .text-stats {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #94a3b8;
     font-weight: 500;
+    margin-top: 0.5rem;
 }
 
 /* 애니메이션 */
@@ -206,6 +236,16 @@
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
+    .insight-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .insight-card-header h2 {
+        font-size: 1.8rem;
+    }
+    
     .csid-grid {
         gap: 1rem;
     }
@@ -251,6 +291,10 @@
 }
 
 @media (max-width: 480px) {
+    .insight-card-header h2 {
+        font-size: 1.6rem;
+    }
+    
     .summary-section {
         margin-top: 2rem;
         padding-top: 1.5rem;
@@ -293,10 +337,10 @@
     }
     
     .text-value {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
     
     .text-stats {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 } 

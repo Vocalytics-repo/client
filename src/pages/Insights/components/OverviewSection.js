@@ -1,5 +1,6 @@
 import React from 'react';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
+import RefreshButton from '../../../components/common/RefreshButton';
 
 const OverviewSection = ({ data, loading, onRefresh }) => {
     // 로딩 상태
@@ -7,7 +8,6 @@ const OverviewSection = ({ data, loading, onRefresh }) => {
         return (
             <div className="insight-card">
                 <h2>
-                    <span className="card-icon">📊</span>
                     전체 개요
                 </h2>
                 <LoadingSpinner message="개요 데이터를 불러오는 중..." />
@@ -20,20 +20,15 @@ const OverviewSection = ({ data, loading, onRefresh }) => {
         return (
             <div className="insight-card">
                 <h2>
-                    <span className="card-icon">📊</span>
                     전체 개요
                 </h2>
                 <div className="empty-state">
-                    <div className="empty-icon">📈</div>
                     <h3>데이터를 불러올 수 없습니다</h3>
                     <p>인사이트 서비스에 연결할 수 없거나 데이터가 없습니다.</p>
-                    <button 
-                        className="retry-button"
-                        onClick={onRefresh}
-                        style={{ marginTop: '1rem' }}
-                    >
-                        다시 시도
-                    </button>
+                    <RefreshButton 
+                        onRefresh={onRefresh}
+                        className="retry-refresh-button"
+                    />
                 </div>
             </div>
         );
@@ -57,29 +52,14 @@ const OverviewSection = ({ data, loading, onRefresh }) => {
 
     return (
         <div className="insight-card">
-            <h2>
-                <span className="card-icon">📊</span>
-                전체 개요
-                <button 
-                    className="refresh-button"
-                    onClick={onRefresh}
-                    title="데이터 새로고침"
-                    style={{
-                        marginLeft: 'auto',
-                        background: 'none',
-                        border: 'none',
-                        fontSize: '1.2rem',
-                        cursor: 'pointer',
-                        padding: '0.5rem',
-                        borderRadius: '8px',
-                        transition: 'background-color 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(0,0,0,0.05)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                >
-                    🔄
-                </button>
-            </h2>
+            <div className="insight-card-header">
+                <h2>전체 개요</h2>
+                <RefreshButton 
+                    onRefresh={onRefresh}
+                    loading={loading}
+                    className="overview-refresh-button"
+                />
+            </div>
 
             {/* 주요 통계 */}
             <div className="stats-grid">
@@ -182,7 +162,6 @@ const OverviewSection = ({ data, loading, onRefresh }) => {
                                 <div className="text-value">"{text.text}"</div>
                                 <div className="text-stats">
                                     오류율: {formatPercent(text.avg_error_rate)} 
-                                    ({formatNumber(text.sample_count)}개 샘플)
                                 </div>
                             </div>
                         </div>
@@ -192,7 +171,7 @@ const OverviewSection = ({ data, loading, onRefresh }) => {
 
             {/* 핵심 인사이트 */}
             <div className="summary-section">
-                <h3>핵심 인사이트</h3>
+                <h3>종합 분석 결과</h3>
                 <ul className="insights-list">
                     {data.key_insights.map((insight, index) => (
                         <li key={index}>{insight}</li>
