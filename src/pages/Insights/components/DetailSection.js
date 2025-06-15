@@ -22,10 +22,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     if (loading) {
         return (
             <div className="insight-card">
-                <h2>
-                    <span className="card-icon">⏳</span>
-                    데이터 로딩 중
-                </h2>
+                <h2>데이터 로딩 중</h2>
                 <LoadingSpinner message="세부 분석 데이터를 불러오는 중..." />
             </div>
         );
@@ -35,10 +32,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     if (!data) {
         return (
             <div className="insight-card">
-                <h2>
-                    <span className="card-icon">📊</span>
-                    세부 분석
-                </h2>
+                <h2>세부 분석</h2>
                 <div className="empty-state">
                     <div className="empty-icon">📈</div>
                     <h3>데이터를 불러올 수 없습니다</h3>
@@ -70,10 +64,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     // 성별 분석 렌더링
     const renderGenderAnalysis = (data) => (
         <div className="detail-content">
-            <h2>
-                <span className="card-icon">👥</span>
-                성별에 따른 발음 성과 분석
-            </h2>
+            <h2>성별에 따른 발음 성과 분석</h2>
             
             <div className="comparison-stats">
                 <div className="comparison-item male">
@@ -130,15 +121,10 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
         </div>
     );
 
-
-
     // CSID 분석 렌더링
     const renderCSIDAnalysis = (data) => (
         <div className="detail-content">
-            <h2>
-                <span className="card-icon">🔍</span>
-                CSID 오류 패턴 분석
-            </h2>
+            <h2>CSID 오류 패턴 분석</h2>
             
             <div className="csid-overview">
                 <div className="stats-grid">
@@ -212,10 +198,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
         
         return (
             <div className="detail-content">
-                <h2>
-                    <span className="card-icon">📈</span>
-                    한국어 수준별 발음 성과 분석
-                </h2>
+                <h2>한국어 수준별 발음 성과 분석</h2>
                 <div className="simple-stats">
                     {sortedLevels.map(([level, stats]) => (
                         <div key={level} className="level-item">
@@ -239,10 +222,7 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
 
     const renderTypeAnalysis = (data) => (
         <div className="detail-content">
-            <h2>
-                <span className="card-icon">📝</span>
-                타입별 성과 분석
-            </h2>
+            <h2>타입별 성과 분석</h2>
             <div className="type-comparison">
                 <div className="type-item">
                     <h3>String 타입</h3>
@@ -277,7 +257,6 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     const renderTextAnalysis = (data) => (
         <div className="detail-content">
             <h2>
-                <span className="card-icon">📚</span>
                 텍스트 난이도 분석
             </h2>
             <div className="text-difficulty">
@@ -290,11 +269,11 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
                     </div>
                 </div>
                 
-                <div className="difficult-texts-section">
+                <div className="summary-section">
                     <h3>가장 어려운 텍스트</h3>
-                    <div className="text-list">
+                    <div className="difficult-texts">
                         {(data.hardest_texts || []).slice(0, 5).map((text, index) => (
-                            <div key={index} className="text-item difficult">
+                            <div key={index} className="difficult-text-item">
                                 <div className="text-rank">#{index + 1}</div>
                                 <div className="text-content">
                                     <div className="text-value">"{text.text}"</div>
