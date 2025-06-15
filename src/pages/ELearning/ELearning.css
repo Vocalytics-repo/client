@@ -3,69 +3,68 @@
 .elearning-container {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* min-height에서 고정 height로 변경 */
-    max-height: 100vh; /* 최대 높이 제한 추가 */
-    padding: 1rem; /* padding 줄임 */
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
     padding-left: 4rem; /* 햄버거 버튼 영역 고려하되 줄임 */
-    background: linear-gradient(145deg, #f0f5ff, #e6fffa);
+    background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 25%, #2a2d3a 50%, #1a1f2e 75%, #0f1419 100%);
     font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
     position: relative;
-    overflow: hidden; /* 스크롤바 제거 */
-    box-sizing: border-box; /* 박스 사이징 추가 */
+    box-sizing: border-box;
+    color: #ffffff;
+    margin: 0;
+    overflow: hidden;
 }
 
-/* 배경 장식 요소 */
+/* 배경 장식 요소 - 어두운 테마에 맞게 업데이트 */
 .elearning-container::before {
     content: '';
     position: absolute;
-    top: -10%;
-    right: -5%;
-    width: 400px;
-    height: 400px;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(108, 186, 164, 0.1) 0%, rgba(108, 144, 186, 0.05) 70%, transparent 100%);
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(147, 51, 234, 0.1) 40%, transparent 70%);
     z-index: 0;
+    animation: float 20s ease-in-out infinite;
 }
 
 .elearning-container::after {
     content: '';
     position: absolute;
-    bottom: -10%;
-    left: -5%;
-    width: 350px;
-    height: 350px;
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(92, 106, 196, 0.1) 0%, rgba(92, 106, 196, 0.05) 70%, transparent 100%);
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.12) 0%, rgba(59, 130, 246, 0.08) 40%, transparent 70%);
     z-index: 0;
+    animation: float 25s ease-in-out infinite reverse;
 }
 
-/* 페이지 헤더 */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(120deg); }
+    66% { transform: translateY(10px) rotate(240deg); }
+}
+
+/* ELearning 페이지 전용 헤더 스타일 */
 .elearning-page-header {
-    text-align: center;
     margin-bottom: 1rem; /* margin 줄임 */
     margin-left: -2rem; /* 왼쪽 패딩을 상쇄하여 정확히 중앙에 위치 */
-    position: relative;
-    z-index: 1;
     flex-shrink: 0; /* 헤더 크기 고정 */
 }
 
-.page-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #333, #666);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
+/* 페이지 헤더 스타일은 공통 컴포넌트에서 처리됨 */
+
+/* ELearning 전용 에러 메시지 */
+.elearning-error {
+    margin-bottom: 1rem; /* margin 줄임 */
+    flex-shrink: 0; /* 오류 메시지 크기 고정 */
 }
 
-.page-header p {
-    font-size: 1.2rem;
-    color: #555;
-    opacity: 0.8;
-    margin: 0;
-}
+/* 에러 메시지 스타일은 공통 컴포넌트에서 처리됨 */
 
 /* 검색 섹션 */
 .search-section {
@@ -75,81 +74,37 @@
     flex-shrink: 0; /* 검색 섹션 크기 고정 */
 }
 
-/* 오류 메시지 */
-.error-message {
-    margin-bottom: 1rem; /* margin 줄임 */
-    position: relative;
-    z-index: 1;
-    flex-shrink: 0; /* 오류 메시지 크기 고정 */
-}
-
-.error-content {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    background-color: rgba(255, 59, 48, 0.1);
-    border: 1px solid rgba(255, 59, 48, 0.2);
-    border-radius: 12px;
-    color: #d70015;
-    font-weight: 500;
-    backdrop-filter: blur(10px);
-}
-
-.error-content svg {
-    flex-shrink: 0;
-}
-
-.error-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: inherit;
-    padding: 0.25rem;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-    margin-left: auto;
-}
-
-.error-close:hover {
-    background-color: rgba(255, 59, 48, 0.1);
-}
-
 /* 콘텐츠 섹션 */
 .content-section {
     flex: 1;
     position: relative;
     z-index: 1;
-    overflow-y: auto; /* 콘텐츠 영역에만 스크롤 허용 */
-    min-height: 0; /* flex 아이템이 줄어들 수 있도록 */
-    max-height: calc(100vh - 200px); /* 헤더와 검색 영역을 제외한 높이 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
 }
 
-/* 로딩 컨테이너 */
-.loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    text-align: center;
+/* 커스텀 스크롤바 스타일 */
+.content-section::-webkit-scrollbar {
+    width: 8px;
 }
 
-.loading-spinner-large {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(108, 144, 186, 0.2);
-    border-top: 4px solid #6c90ba;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1.5rem;
+.content-section::-webkit-scrollbar-track {
+    background: rgba(148, 163, 184, 0.1);
+    border-radius: 4px;
 }
 
-.loading-container p {
-    font-size: 1.1rem;
-    color: #666;
-    margin: 0;
+.content-section::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
+
+.content-section::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+/* 로딩 스타일은 공통 컴포넌트에서 처리됨 */
 
 /* 빈 상태 */
 .empty-state {
@@ -163,18 +118,18 @@
 
 .empty-icon {
     margin-bottom: 1.5rem;
-    color: #999;
+    color: #64748b;
 }
 
 .empty-state h3 {
     font-size: 1.5rem;
-    color: #333;
+    color: #e2e8f0;
     margin: 0 0 0.5rem 0;
 }
 
 .empty-state p {
     font-size: 1rem;
-    color: #666;
+    color: #94a3b8;
     margin: 0 0 2rem 0;
 }
 
@@ -185,7 +140,7 @@
 
 .results-header h2 {
     font-size: 1.5rem;
-    color: #333;
+    color: #e2e8f0;
     margin: 0;
     font-weight: 600;
 }
@@ -233,18 +188,12 @@
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 1rem;
     }
-    
-    .content-section {
-        max-height: calc(100vh - 180px);
-    }
 }
 
 @media (max-width: 768px) {
     .elearning-container {
         padding: 0.75rem;
         padding-left: 3rem; /* 모바일에서는 조금 더 작게 */
-        height: 100vh;
-        max-height: 100vh;
     }
     
     .elearning-page-header {
@@ -252,19 +201,13 @@
         margin-bottom: 0.75rem;
     }
     
-    .page-header h1 {
-        font-size: 1.8rem; /* 크기 더 줄임 */
-    }
-    
-    .page-header p {
-        font-size: 0.9rem;
-    }
+    /* 페이지 헤더 스타일은 공통 컴포넌트에서 처리됨 */
     
     .search-section {
         margin-bottom: 0.75rem;
     }
     
-    .error-message {
+    .elearning-error {
         margin-bottom: 0.75rem;
     }
     
@@ -273,10 +216,6 @@
         gap: 0.75rem;
         margin-bottom: 1rem;
         padding: 0.25rem;
-    }
-    
-    .content-section {
-        max-height: calc(100vh - 150px);
     }
     
     .results-header {
@@ -302,8 +241,6 @@
     .elearning-container {
         padding: 0.5rem;
         padding-left: 2.5rem; /* 작은 모바일에서는 더 작게 */
-        height: 100vh;
-        max-height: 100vh;
     }
     
     .elearning-page-header {
@@ -311,19 +248,13 @@
         margin-bottom: 0.5rem;
     }
     
-    .page-header h1 {
-        font-size: 1.5rem;
-    }
-    
-    .page-header p {
-        font-size: 0.85rem;
-    }
+    /* 페이지 헤더 스타일은 공통 컴포넌트에서 처리됨 */
     
     .search-section {
         margin-bottom: 0.5rem;
     }
     
-    .error-message {
+    .elearning-error {
         margin-bottom: 0.5rem;
     }
     
@@ -332,10 +263,6 @@
         gap: 0.5rem;
         margin-bottom: 0.5rem;
         padding: 0.125rem;
-    }
-    
-    .content-section {
-        max-height: calc(100vh - 120px);
     }
     
     .results-header {

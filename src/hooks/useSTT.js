@@ -7,6 +7,7 @@ const useSTT = () => {
     const [pronunciationText, setPronunciationText] = useState('');
     const [isStreaming, setIsStreaming] = useState(false);
     const [recordingTime, setRecordingTime] = useState(0);
+    const [selectedGender, setSelectedGender] = useState('female');
     
     // 오디오 관련 ref
     const mediaRecorderRef = useRef(null);
@@ -213,37 +214,7 @@ const useSTT = () => {
         }, 50);
     };
     
-    // TTS 발음 듣기
-    const handleTTS = async () => {
-        try {
-            // 텍스트가 비어 있는지 확인
-            if (!pronunciationText || pronunciationText.trim() === '') {
-                alert('변환할 텍스트가 없습니다.');
-                return;
-            }
-            
-            const audioBlob = await generateTTS(pronunciationText);
-            
-            // audioBlob이 null이거나 유효하지 않은 경우 확인
-            if (!audioBlob || !(audioBlob instanceof Blob)) {
-                throw new Error('오디오 데이터를 받지 못했습니다.');
-            }
-            
-            // 오디오 재생
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
-            
-            // 오디오 재생 완료 후 URL 객체 해제
-            audio.onended = () => {
-                URL.revokeObjectURL(audioUrl);
-            };
-            
-            audio.play();
-        } catch (error) {
-            console.error('TTS 처리 오류:', error);
-            alert('TTS 발음 듣기 중 오류가 발생했습니다: ' + error.message);
-        }
-    };
+
     
     return {
         isRecording,
@@ -251,12 +222,13 @@ const useSTT = () => {
         pronunciationText,
         isStreaming,
         recordingTime,
+        selectedGender,
+        setSelectedGender,
         transcriptionCanvasRef,
         pronunciationCanvasRef,
         analyserRef,
         startRecording,
-        stopRecording,
-        handleTTS
+        stopRecording
     };
 };
 

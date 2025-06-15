@@ -23,10 +23,15 @@
 .hamburger .bar {
     width: 100%;
     height: 3px;
-    background-color: #fff;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
     transition: all 0.3s ease;
+}
+
+.hamburger:hover .bar {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 /* 사이드바 전체 영역 */
@@ -37,10 +42,12 @@
     width: 280px;               /* 사이드바 너비 */
     height: 100vh;              /* 뷰포트 높이에 맞춤 */
     max-height: 100vh;          /* 최대 높이 제한 */
-    background-color: #ffffff;  /* 배경색 */
-    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+    background: rgba(30, 41, 59, 0.95);  /* 어두운 반투명 배경 */
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
     transform: translateX(-100%); /* 초기 상태: 화면 밖 */
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;             /* 화면 위에 표시 */
     display: flex;
     flex-direction: column;
@@ -61,7 +68,7 @@
     padding: 15px 0;
     overflow-y: auto;          /* 사이드바 내부에만 스크롤 허용 */
     scrollbar-width: thin;     /* Firefox에서 스크롤바 얇게 */
-    scrollbar-color: #c1c1c1 #f1f1f1; /* Firefox 스크롤바 색상 */
+    scrollbar-color: rgba(59, 130, 246, 0.6) rgba(148, 163, 184, 0.1); /* Firefox 스크롤바 색상 */
 }
 
 /* 사이드바 내부 스크롤바 스타일링 (Webkit) */
@@ -70,17 +77,18 @@
 }
 
 .sidebar-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: rgba(148, 163, 184, 0.1);
     border-radius: 10px;
 }
 
 .sidebar-content::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
 .sidebar-content::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
 }
 
 /* 닫기 버튼 */
@@ -91,31 +99,44 @@
     border: none;
     font-size: 1.8rem;
     cursor: pointer;
-    color: #5046E4;
-    transition: color 0.2s ease;
+    color: #94a3b8;
+    transition: all 0.3s ease;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .close-btn:hover {
-    color: #333;
+    color: #ffffff;
+    background: rgba(239, 68, 68, 0.2);
+    transform: scale(1.1);
 }
 
 /* 사이드바 로고 */
 .sidebar-logo {
     padding: 20px 25px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
     margin-bottom: 20px;
 }
 
 .sidebar-logo h2 {
     font-size: 1.8rem;
-    color: #5046E4;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin: 0 0 5px 0;
+    font-weight: 700;
 }
 
 .sidebar-logo p {
     font-size: 0.9rem;
-    color: #666;
+    color: #94a3b8;
     margin: 0;
+    font-weight: 400;
 }
 
 /* 메뉴 리스트 스타일 */
@@ -137,31 +158,60 @@
 .sidebar-content nav a {
     display: block;
     text-decoration: none;
-    color: #333;
+    color: #e2e8f0;
     font-size: 1.1rem;
+    font-weight: 500;
     padding: 15px 25px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     border-left: 4px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-content nav a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.sidebar-content nav a:hover::before {
+    width: 100%;
 }
 
 .sidebar-content nav a:hover {
-    background-color: rgba(80, 70, 228, 0.05);
-    color: #5046E4;
-    border-left: 4px solid #5046E4;
+    color: #ffffff;
+    border-left: 4px solid #3b82f6;
+    transform: translateX(5px);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* 활성 링크 스타일 */
+.sidebar-content nav a.active {
+    color: #ffffff;
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.1));
+    font-weight: 600;
 }
 
 /* 사이드바 푸터 */
 .sidebar-footer {
     padding: 20px 25px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
     margin-top: auto;
     text-align: center;
 }
 
 .sidebar-footer p {
     font-size: 0.9rem;
-    color: #999;
+    color: #64748b;
     margin: 0;
+    font-weight: 400;
 }
 
 /* 반응형 조정 */
@@ -182,6 +232,19 @@
     .hamburger .bar {
         height: 2.5px;
     }
+    
+    .sidebar-logo {
+        padding: 15px 20px;
+    }
+    
+    .sidebar-logo h2 {
+        font-size: 1.6rem;
+    }
+    
+    .sidebar-content nav a {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -200,5 +263,22 @@
     
     .hamburger .bar {
         height: 2px;
+    }
+    
+    .sidebar-logo {
+        padding: 12px 18px;
+    }
+    
+    .sidebar-logo h2 {
+        font-size: 1.4rem;
+    }
+    
+    .sidebar-logo p {
+        font-size: 0.8rem;
+    }
+    
+    .sidebar-content nav a {
+        padding: 10px 18px;
+        font-size: 0.95rem;
     }
 }

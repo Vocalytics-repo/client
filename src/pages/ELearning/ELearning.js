@@ -1,5 +1,8 @@
 import React from 'react';
 import useELearning from '../../hooks/useELearning';
+import PageHeader from '../../components/common/PageHeader';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import ErrorMessage from '../../components/common/ErrorMessage';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import VideoCard from '../../components/VideoCard/VideoCard';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
@@ -46,10 +49,11 @@ const ELearning = () => {
 
     return (
         <div className="elearning-container">
-            <header className="elearning-page-header">
-                <h1>한국어 교육 E러닝</h1>
-                <p>YouTube의 다양한 한국어 교육 영상으로 학습하세요</p>
-            </header>
+            <PageHeader 
+                title="한국어 교육 E러닝"
+                subtitle="YouTube의 다양한 한국어 교육 영상으로 학습하세요"
+                className="elearning-page-header"
+            />
 
             <div className="search-section">
                 <SearchBar
@@ -64,29 +68,19 @@ const ELearning = () => {
             </div>
 
             {error && (
-                <div className="error-message">
-                    <div className="error-content">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                            <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2"/>
-                            <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2"/>
-                        </svg>
-                        <span>{error}</span>
-                        <button onClick={clearError} className="error-close">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+                <ErrorMessage 
+                    message={error}
+                    onClose={clearError}
+                    className="elearning-error"
+                />
             )}
 
             <main className="content-section">
                 {loading && videos.length === 0 ? (
-                    <div className="loading-container">
-                        <div className="loading-spinner-large"></div>
-                        <p>영상을 불러오는 중...</p>
-                    </div>
+                    <LoadingSpinner 
+                        message="영상을 불러오는 중..."
+                        size="large"
+                    />
                 ) : videos.length === 0 ? (
                     <div className="empty-state">
                         <div className="empty-icon">

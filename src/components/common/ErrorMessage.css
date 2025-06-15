@@ -1,0 +1,110 @@
+/* src/components/common/ErrorMessage.css */
+
+.common-error-message {
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.common-error-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    font-weight: 500;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+}
+
+/* 에러 타입별 스타일 */
+.common-error-message.error .common-error-content {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.common-error-message.warning .common-error-content {
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+
+.common-error-message.info .common-error-content {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+}
+
+.common-error-content svg {
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px currentColor);
+}
+
+.common-error-text {
+    flex: 1;
+    font-weight: 600;
+}
+
+.common-error-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 0.25rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    margin-left: auto;
+    font-size: 1.2rem;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.common-error-message.error .common-error-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: scale(1.1);
+}
+
+.common-error-message.warning .common-error-close:hover {
+    background: rgba(251, 191, 36, 0.2);
+    transform: scale(1.1);
+}
+
+.common-error-message.info .common-error-close:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: scale(1.1);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .common-error-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.2rem;
+    }
+    
+    .common-error-close {
+        margin-left: 0;
+        align-self: flex-end;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .common-error-content {
+        padding: 1rem;
+        gap: 0.8rem;
+    }
+    
+    .common-error-text {
+        font-size: 0.95rem;
+    }
+} 
