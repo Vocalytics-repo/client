@@ -136,7 +136,7 @@
     justify-content: center;
 }
 
-.stat-item {
+.modal-stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,7 +147,7 @@
     backdrop-filter: blur(10px);
 }
 
-.stat-value {
+.modal-stat-value {
     font-size: 2rem;
     font-weight: 700;
     background: linear-gradient(135deg, #3b82f6, #8b5cf6);
@@ -157,7 +157,7 @@
     margin-bottom: 8px;
 }
 
-.stat-label {
+.modal-stat-label {
     color: #94a3b8;
     font-size: 0.875rem;
     font-weight: 500;
@@ -228,8 +228,8 @@
     gap: 8px;
 }
 
-.nationality-item,
-.level-item {
+.modal-nationality-item,
+.modal-level-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -240,14 +240,14 @@
     backdrop-filter: blur(10px);
 }
 
-.nationality-name,
-.level-name {
+.modal-nationality-name,
+.modal-level-name {
     color: #f8fafc;
     font-weight: 500;
 }
 
-.nationality-stats,
-.level-stats {
+.modal-nationality-stats,
+.modal-level-stats {
     color: #94a3b8;
     font-size: 0.875rem;
 }
