@@ -1,0 +1,123 @@
+.gender-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.gender-selector__label {
+    font-weight: 600;
+    color: #e2e8f0;
+    text-align: center;
+    margin: 0;
+}
+
+.gender-selector__select {
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    background: rgba(30, 41, 59, 0.8);
+    color: #e2e8f0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    outline: none;
+}
+
+.gender-selector__select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.gender-selector__select:hover:not(:disabled) {
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.gender-selector__select option {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 0.5rem;
+}
+
+/* 크기 변형 */
+.gender-selector--small .gender-selector__label {
+    font-size: 0.9rem;
+}
+
+.gender-selector--small .gender-selector__select {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    min-width: 100px;
+}
+
+.gender-selector--medium .gender-selector__label {
+    font-size: 1rem;
+}
+
+.gender-selector--medium .gender-selector__select {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    min-width: 120px;
+}
+
+.gender-selector--large .gender-selector__label {
+    font-size: 1.1rem;
+}
+
+.gender-selector--large .gender-selector__select {
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    min-width: 140px;
+}
+
+/* 비활성화 상태 */
+.gender-selector--disabled .gender-selector__label {
+    opacity: 0.5;
+}
+
+.gender-selector--disabled .gender-selector__select {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(30, 41, 59, 0.5);
+}
+
+.gender-selector--disabled .gender-selector__select:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: rgba(30, 41, 59, 0.5);
+}
+
+/* 인라인 레이아웃 */
+.gender-selector--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gender-selector--inline .gender-selector__label {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .gender-selector--large .gender-selector__select {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+        min-width: 120px;
+    }
+    
+    .gender-selector--medium .gender-selector__select {
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+        min-width: 110px;
+    }
+    
+    .gender-selector--small .gender-selector__select {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+        min-width: 90px;
+    }
+} 
