@@ -378,38 +378,38 @@
         padding: 1rem;
         padding-left: 3rem;
     }
-
+    
     .insights-page-header {
         margin-left: -1rem;
     }
-
+    
     .insights-page-header h1 {
         font-size: 2.5rem;
     }
-
+    
     .insight-card {
         padding: 2rem;
     }
-
+    
     .insight-card h2 {
         font-size: 1.5rem;
     }
-
+    
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-
+    
     .stat-value {
         font-size: 2rem;
     }
-
+    
     .warning-content {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
     }
-
+    
     .retry-button {
         margin-left: 0;
     }
@@ -766,41 +766,41 @@
         padding: 1rem;
         padding-left: 2rem;
     }
-
+    
     .insight-card {
         padding: 1.5rem;
     }
-
+    
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-
+    
     .stat-item {
         padding: 1.5rem 1rem;
     }
-
+    
     .stat-value {
         font-size: 2rem;
     }
-
+    
     .stat-label {
         font-size: 0.9rem;
     }
-
+    
     .tab-container {
         gap: 0.25rem;
         padding: 0.5rem;
         border-radius: 20px;
     }
-
+    
     .tab-button {
         padding: 0.875rem 1.25rem;
         font-size: 0.85rem;
         min-height: 44px;
         border-radius: 16px;
     }
-
+    
     .tab-icon {
         width: 18px;
         height: 18px;
@@ -809,16 +809,16 @@
     .tab-label {
         font-size: 0.85rem;
     }
-
+    
     .filter-controls {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-
+    
     .filter-group {
         gap: 0.5rem;
     }
-
+    
     .comparison-stats {
         grid-template-columns: 1fr;
         gap: 1.5rem;

@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
+import PronunciationErrorModal from './PronunciationErrorModal';
 
 const DetailSection = ({ activeTab, data, loading, filters }) => {
+    // 모달 상태 관리
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedText, setSelectedText] = useState('');
+
     // 퍼센트 포맷팅 함수 - 스마트 변환
     const formatPercent = (value) => {
         // 값이 1보다 크면 이미 백분율 형태로 간주 (예: 82.18)
@@ -16,6 +22,18 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     // 숫자 포맷팅 함수
     const formatNumber = (value) => {
         return value.toLocaleString();
+    };
+
+    // 텍스트 클릭 핸들러
+    const handleTextClick = (text) => {
+        setSelectedText(text);
+        setModalOpen(true);
+    };
+
+    // 모달 닫기 핸들러
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setSelectedText('');
     };
 
     // 로딩 상태
@@ -273,7 +291,12 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
                     <h3>가장 어려운 발음</h3>
                     <div className="difficult-texts">
                         {(data.hardest_texts || []).slice(0, 10).map((text, index) => (
-                            <div key={index} className="difficult-text-item">
+                            <div 
+                                key={index} 
+                                className="difficult-text-item clickable"
+                                onClick={() => handleTextClick(text.text)}
+                                title="클릭하여 발음 오류 분석 보기"
+                            >
                                 <div className="text-rank">#{index + 1}</div>
                                 <div className="text-content">
                                     <div className="text-value">"{text.text}"</div>
@@ -290,9 +313,21 @@ const DetailSection = ({ activeTab, data, loading, filters }) => {
     );
 
     return (
+        <>
         <div className="insight-card">
             {renderTabContent()}
         </div>
+            
+            {/* 발음 오류 분석 모달 - Portal로 body에 렌더링 */}
+            {modalOpen && createPortal(
+                <PronunciationErrorModal 
+                    isOpen={modalOpen}
+                    onClose={handleModalClose}
+                    refText={selectedText}
+                />,
+                document.body
+            )}
+        </>
     );
 };
 
