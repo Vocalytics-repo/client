@@ -1,7 +1,7 @@
 // 인사이트 API 서비스 함수들
 // 한국어 학습 인사이트 분석을 위한 API 함수들을 정의합니다.
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
 /**
  * 전체 지표 개요 조회
