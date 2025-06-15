@@ -3,6 +3,7 @@ import useInsights from '../../hooks/useInsights';
 import PageHeader from '../../components/common/PageHeader';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import RefreshButton from '../../components/common/RefreshButton';
 import OverviewSection from './components/OverviewSection';
 import TabNavigation from './components/TabNavigation';
 import FilterSection from './components/FilterSection';

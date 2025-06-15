@@ -1,0 +1,177 @@
+/* RefreshButton.css */
+
+.refresh-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: 
+        0 4px 15px rgba(59, 130, 246, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    backdrop-filter: blur(10px);
+    user-select: none;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.refresh-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.refresh-button:hover::before {
+    left: 100%;
+}
+
+.refresh-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px rgba(59, 130, 246, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.refresh-button:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 10px rgba(59, 130, 246, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.refresh-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+}
+
+.refresh-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.refresh-button.animating .refresh-icon {
+    animation: refreshSpin 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.refresh-button.loading .refresh-icon {
+    animation: refreshSpin 1s linear infinite;
+}
+
+.refresh-text {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.refresh-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.refresh-button:active .refresh-ripple {
+    width: 120px;
+    height: 120px;
+    opacity: 0;
+}
+
+/* 애니메이션 키프레임 */
+@keyframes refreshSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 성공 애니메이션 */
+.refresh-button.success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    animation: successPulse 0.6s ease;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* 오류 애니메이션 */
+.refresh-button.error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    animation: errorShake 0.6s ease;
+}
+
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .refresh-button {
+        padding: 10px 16px;
+        font-size: 13px;
+        min-width: 100px;
+    }
+    
+    .refresh-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* 다크 테마 최적화 */
+@media (prefers-color-scheme: dark) {
+    .refresh-button {
+        box-shadow: 
+            0 4px 15px rgba(59, 130, 246, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    }
+    
+    .refresh-button:hover {
+        box-shadow: 
+            0 8px 25px rgba(59, 130, 246, 0.5),
+            0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+    }
+} 
