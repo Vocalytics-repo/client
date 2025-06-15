@@ -104,9 +104,9 @@ const PronunciationErrorModal = ({ isOpen, onClose, refText }) => {
                         <div className="pronunciation-analysis">
                             <div className="analysis-overview">
                                 <div className="overview-stats">
-                                    <div className="stat-item">
-                                        <span className="stat-value">{formatNumber(data.found_documents)}</span>
-                                        <span className="stat-label">발견된 샘플</span>
+                                    <div className="modal-stat-item">
+                                        <span className="modal-stat-value">{formatNumber(data.found_documents)}</span>
+                                        <span className="modal-stat-label">발견된 샘플</span>
                                     </div>
                                 </div>
                             </div>
@@ -140,9 +140,9 @@ const PronunciationErrorModal = ({ isOpen, onClose, refText }) => {
                                                 <h4>국적별 성과 (상위 5개)</h4>
                                                 <div className="nationality-performance">
                                                     {Object.entries(data.error_analysis.nationality_performance).map(([nationality, stats]) => (
-                                                        <div key={nationality} className="nationality-item">
-                                                            <span className="nationality-name">{nationality}</span>
-                                                            <span className="nationality-stats">
+                                                        <div key={nationality} className="modal-nationality-item">
+                                                            <span className="modal-nationality-name">{nationality}</span>
+                                                            <span className="modal-nationality-stats">
                                                                 {formatNumber(stats.count || 0)}개 샘플, 오류율 {formatPercent(stats.avg_error_rate || 0)}
                                                             </span>
                                                         </div>
@@ -156,9 +156,9 @@ const PronunciationErrorModal = ({ isOpen, onClose, refText }) => {
                                                 <h4>레벨별 성과</h4>
                                                 <div className="level-performance">
                                                     {Object.entries(data.error_analysis.level_performance).map(([level, stats]) => (
-                                                        <div key={level} className="level-item">
-                                                            <span className="level-name">{level} 레벨</span>
-                                                            <span className="level-stats">
+                                                        <div key={level} className="modal-level-item">
+                                                            <span className="modal-level-name">{level} 레벨</span>
+                                                            <span className="modal-level-stats">
                                                                 {formatNumber(stats.count || 0)}개 샘플, 오류율 {formatPercent(stats.avg_error_rate || 0)}
                                                             </span>
                                                         </div>
