@@ -72,18 +72,19 @@ export const processAudioForSTT = async (audioBlob) => {
 /**
  * TTS 서비스를 사용하여 텍스트를 음성으로 변환합니다.
  * @param {string} text - 음성으로 변환할 텍스트
+ * @param {string} gender - 음성 성별 ("male" 또는 "female", 기본값: "female")
  * @returns {Promise<Blob>} - 오디오 Blob 데이터
  */
-export const generateTTS = async (text) => {
+export const generateTTS = async (text, gender = 'female') => {
     try {
-        console.log('TTS 요청 시작:', `${process.env.REACT_APP_BACKEND_URL}/api/tts`, { text });
+        console.log('TTS 요청 시작:', `${process.env.REACT_APP_BACKEND_URL}/api/tts`, { text, gender });
         
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ text })
+            body: JSON.stringify({ text, gender })
         });
 
         if (!response.ok) {

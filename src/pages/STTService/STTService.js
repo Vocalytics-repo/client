@@ -2,7 +2,9 @@ import React from 'react';
 import useSTT from '../../hooks/useSTT';
 import ResultCard from '../../components/ResultCard/ResultCard';
 import ActionButton from '../../components/ActionButton/ActionButton';
-import { MicrophoneIcon, StopIcon, SoundIcon } from '../../components/Icons/Icons';
+import TTSButton from '../../components/common/TTSButton';
+import GenderSelector from '../../components/common/GenderSelector';
+import { MicrophoneIcon, StopIcon } from '../../components/Icons/Icons';
 import './STTService.css';
 
 const STTService = () => {
@@ -11,12 +13,13 @@ const STTService = () => {
         transcriptionText,
         pronunciationText,
         recordingTime,
+        selectedGender,
+        setSelectedGender,
         transcriptionCanvasRef,
         pronunciationCanvasRef,
         analyserRef,
         startRecording,
-        stopRecording,
-        handleTTS
+        stopRecording
     } = useSTT();
     
     // 타이머 포맷팅 함수
@@ -79,14 +82,22 @@ const STTService = () => {
                     )}
                 </div>
                 
-                <ActionButton 
-                    onClick={handleTTS}
-                    disabled={!pronunciationText}
-                    variant="secondary"
-                >
-                    <SoundIcon />
-                    TTS 발음 듣기
-                </ActionButton>
+                <div className="tts-controls">
+                    <TTSButton 
+                        text={pronunciationText}
+                        gender={selectedGender}
+                        disabled={!pronunciationText}
+                        variant="secondary"
+                        size="large"
+                    />
+                    
+                    <GenderSelector 
+                        value={selectedGender}
+                        onChange={setSelectedGender}
+                        size="small"
+                        className="tts-gender-selector"
+                    />
+                </div>
             </div>
         </div>
     );

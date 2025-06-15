@@ -256,3 +256,42 @@
     min-width: 80px;
     text-align: center;
 }
+
+/* TTS 컨트롤 */
+.tts-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.tts-gender-selector {
+    flex-shrink: 0;
+}
+
+/* 반응형 디자인 업데이트 */
+@media (max-width: 767px) {
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    
+    .recording-controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .tts-controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+    
+    .buttons-container button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
