@@ -1,5 +1,8 @@
 # Vocalytics - 한국어 학습 플랫폼 (클라이언트)
 
+![ChatGPT Image 2025년 6월 15일 오후 09_01_18](https://github.com/user-attachments/assets/0b3144b7-e1da-4701-81ee-6de80cbeea51)
+
+
 Vocalytics는 AI 기반 한국어 학습을 위한 종합 플랫폼입니다. 음성 인식(STT), 발음 교정, 학습 인사이트 분석, 그리고 YouTube 기반 E-Learning 기능을 제공합니다.
 
 ## 주요 기능
