@@ -1,0 +1,171 @@
+.tts-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    outline: none;
+}
+
+.tts-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.tts-button:hover::before {
+    left: 100%;
+}
+
+/* 크기 변형 */
+.tts-button--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    min-width: 120px;
+}
+
+.tts-button--medium {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    min-width: 160px;
+}
+
+.tts-button--large {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+    min-width: 200px;
+    border-radius: 50px;
+}
+
+/* 스타일 변형 */
+.tts-button--primary {
+    background: linear-gradient(145deg, #3b82f6, #8b5cf6);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.tts-button--primary:hover {
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+.tts-button--secondary {
+    background: rgba(30, 41, 59, 0.8);
+    color: #e2e8f0;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.tts-button--secondary:hover {
+    border-color: #3b82f6;
+    background: rgba(30, 41, 59, 0.9);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+.tts-button--outline {
+    background: transparent;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+}
+
+.tts-button--outline:hover {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+/* 재생 중 상태 */
+.tts-button--playing {
+    background: linear-gradient(145deg, #06b6d4, #3b82f6);
+    animation: pulse 2s infinite;
+}
+
+.tts-button--playing::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 비활성화 상태 */
+.tts-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.tts-button:disabled::before {
+    display: none;
+}
+
+.tts-button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* 애니메이션 */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .tts-button--large {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        min-width: 180px;
+    }
+    
+    .tts-button--medium {
+        padding: 0.7rem 1.3rem;
+        font-size: 0.95rem;
+        min-width: 140px;
+    }
+    
+    .tts-button--small {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        min-width: 100px;
+    }
+} 
