@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { processAudioForSTT, generateTTS } from '../services/sttService';
+import { saveRecordedAudio, convertToWav, getSupportedMimeType } from '../utils/audioUtils';
 
 const useSTT = () => {
     const [isRecording, setIsRecording] = useState(false);
@@ -8,6 +9,7 @@ const useSTT = () => {
     const [isStreaming, setIsStreaming] = useState(false);
     const [recordingTime, setRecordingTime] = useState(0);
     const [selectedGender, setSelectedGender] = useState('female');
+    const [hasRecording, setHasRecording] = useState(false);
     
     // 오디오 관련 ref
     const mediaRecorderRef = useRef(null);
@@ -16,6 +18,7 @@ const useSTT = () => {
     const streamRef = useRef(null);
     const audioChunksRef = useRef([]);
     const timerRef = useRef(null);
+    const lastRecordedBlobRef = useRef(null);
     
     // 캔버스 ref
     const transcriptionCanvasRef = useRef(null);
@@ -67,15 +70,43 @@ const useSTT = () => {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             streamRef.current = stream;
             
+            // 지원되는 MIME 타입 확인
+            const mimeType = getSupportedMimeType();
+            console.log('사용할 MIME 타입:', mimeType);
+            
             // MediaRecorder 설정
-            mediaRecorderRef.current = new MediaRecorder(stream);
+            const options = mimeType ? { mimeType } : {};
+            mediaRecorderRef.current = new MediaRecorder(stream, options);
             mediaRecorderRef.current.ondataavailable = (event) => {
                 audioChunksRef.current.push(event.data);
             };
             mediaRecorderRef.current.onstop = async () => {
-                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-                // 녹음 종료 후 STT 처리
-                await processSTT(audioBlob);
+                try {
+                    // 원본 녹음 데이터 생성
+                    const originalBlob = new Blob(audioChunksRef.current);
+                    console.log('원본 녹음 데이터:', {
+                        size: originalBlob.size,
+                        type: originalBlob.type
+                    });
+                    
+                    // 실제 WAV 형식으로 변환
+                    console.log('WAV 변환 시작...');
+                    const wavBlob = await convertToWav(originalBlob, 16000);
+                    console.log('WAV 변환 완료:', {
+                        size: wavBlob.size,
+                        type: wavBlob.type
+                    });
+                    
+                    // 마지막 녹음 저장
+                    lastRecordedBlobRef.current = wavBlob;
+                    setHasRecording(true);
+                    
+                    // 녹음 종료 후 STT 처리
+                    await processSTT(wavBlob);
+                } catch (error) {
+                    console.error('녹음 처리 오류:', error);
+                    alert('녹음 처리 중 오류가 발생했습니다: ' + error.message);
+                }
             };
             mediaRecorderRef.current.start();
             
@@ -214,6 +245,15 @@ const useSTT = () => {
         }, 50);
     };
     
+    // 녹음된 오디오 저장 함수
+    const saveLastRecording = () => {
+        if (lastRecordedBlobRef.current) {
+            saveRecordedAudio(lastRecordedBlobRef.current);
+        } else {
+            alert('저장할 녹음 파일이 없습니다.');
+        }
+    };
+    
 
     
     return {
@@ -228,7 +268,9 @@ const useSTT = () => {
         pronunciationCanvasRef,
         analyserRef,
         startRecording,
-        stopRecording
+        stopRecording,
+        saveLastRecording,
+        hasRecording
     };
 };
 

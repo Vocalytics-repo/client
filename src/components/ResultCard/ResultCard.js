@@ -1,5 +1,6 @@
 import React from 'react';
 import AudioSpectrum from '../AudioSpectrum/AudioSpectrum';
+import { SaveIcon } from '../Icons/Icons';
 import './ResultCard.css';
 
 const ResultCard = ({ 
@@ -8,14 +9,27 @@ const ResultCard = ({
     canvasRef, 
     isRecording, 
     analyser, 
-    cardType 
+    cardType,
+    onSave,
+    canSave = false
 }) => {
     const shouldShowSpectrum = isRecording || !text;
     const shouldShowText = !isRecording && text;
     
     return (
         <div className={`result-card ${cardType}-card`}>
-            <h2>{title}</h2>
+            <div className="card-header">
+                <h2>{title}</h2>
+                {canSave && shouldShowText && (
+                    <button 
+                        className="save-icon-button"
+                        onClick={onSave}
+                        title={`${title} 저장`}
+                    >
+                        <SaveIcon />
+                    </button>
+                )}
+            </div>
             
             {shouldShowSpectrum && (
                 <AudioSpectrum 
