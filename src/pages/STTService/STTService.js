@@ -19,7 +19,9 @@ const STTService = () => {
         pronunciationCanvasRef,
         analyserRef,
         startRecording,
-        stopRecording
+        stopRecording,
+        saveLastRecording,
+        hasRecording
     } = useSTT();
     
     // 타이머 포맷팅 함수
@@ -44,6 +46,8 @@ const STTService = () => {
                     isRecording={isRecording}
                     analyser={analyserRef.current}
                     cardType="transcription"
+                    onSave={saveLastRecording}
+                    canSave={hasRecording}
                 />
                 
                 <ResultCard
@@ -57,46 +61,48 @@ const STTService = () => {
             </div>
             
             <div className="buttons-container">
-                <div className="recording-controls">
-                    <ActionButton 
-                        onClick={isRecording ? stopRecording : startRecording}
-                        variant="primary"
-                    >
-                        {isRecording ? (
-                            <>
-                                <StopIcon />
-                                녹음 중지
-                            </>
-                        ) : (
-                            <>
-                                <MicrophoneIcon />
-                                음성 녹음
-                            </>
+                <div className="main-controls">
+                    <div className="recording-controls">
+                        <ActionButton 
+                            onClick={isRecording ? stopRecording : startRecording}
+                            variant="primary"
+                        >
+                            {isRecording ? (
+                                <>
+                                    <StopIcon />
+                                    녹음 중지
+                                </>
+                            ) : (
+                                <>
+                                    <MicrophoneIcon />
+                                    음성 녹음
+                                </>
+                            )}
+                        </ActionButton>
+                        
+                        {isRecording && (
+                            <div className="recording-timer">
+                                {formatTime(recordingTime)}
+                            </div>
                         )}
-                    </ActionButton>
+                    </div>
                     
-                    {isRecording && (
-                        <div className="recording-timer">
-                            {formatTime(recordingTime)}
-                        </div>
-                    )}
-                </div>
-                
-                <div className="tts-controls">
-                    <TTSButton 
-                        text={pronunciationText}
-                        gender={selectedGender}
-                        disabled={!pronunciationText}
-                        variant="secondary"
-                        size="large"
-                    />
-                    
-                    <GenderSelector 
-                        value={selectedGender}
-                        onChange={setSelectedGender}
-                        size="small"
-                        className="tts-gender-selector"
-                    />
+                    <div className="tts-controls">
+                        <TTSButton 
+                            text={pronunciationText}
+                            gender={selectedGender}
+                            disabled={!pronunciationText}
+                            variant="secondary"
+                            size="large"
+                        />
+                        
+                        <GenderSelector 
+                            value={selectedGender}
+                            onChange={setSelectedGender}
+                            size="small"
+                            className="tts-gender-selector"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
