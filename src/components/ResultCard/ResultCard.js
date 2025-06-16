@@ -1,5 +1,6 @@
 import React from 'react';
 import AudioSpectrum from '../AudioSpectrum/AudioSpectrum';
+import { SaveIcon } from '../Icons/Icons';
 import './ResultCard.css';
 
 const ResultCard = ({ 
@@ -25,7 +26,7 @@ const ResultCard = ({
                         onClick={onSave}
                         title={`${title} 저장`}
                     >
-                        💾
+                        <SaveIcon />
                     </button>
                 )}
             </div>
