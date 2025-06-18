@@ -8,25 +8,27 @@
     bottom: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1200;
     padding: 1rem;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     overflow: hidden; /* 외부 스크롤바 제거 */
 }
 
 .video-player-container {
-    background-color: white;
+    background: rgba(15, 20, 25, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     max-width: min(75vw, 1000px);
     width: 100%;
     max-height: 80vh;
     height: auto;
     overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
     animation: slideIn 0.3s ease-out;
     display: flex;
     flex-direction: column;
@@ -48,14 +50,14 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 2rem 2rem 1rem 2rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .video-player-header h2 {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 600;
-    color: #333;
+    color: #e2e8f0;
     line-height: 1.4;
     flex: 1;
     margin-right: 1rem;
@@ -67,14 +69,14 @@
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 50%;
-    color: #666;
+    color: #94a3b8;
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
 
 .close-button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #333;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
 }
 
 .video-embed-container {
@@ -110,12 +112,12 @@
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #6c90ba;
+    color: #3b82f6;
 }
 
 .publish-date {
     font-size: 0.9rem;
-    color: #666;
+    color: #94a3b8;
 }
 
 .video-actions {
@@ -128,23 +130,24 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background-color: #ff0000;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
     color: white;
     text-decoration: none;
     border-radius: 25px;
     font-weight: 500;
     transition: all 0.3s ease;
     font-size: 0.9rem;
-}
-
-.youtube-link:hover {
-    background-color: #cc0000;
-    transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
 }
 
+.youtube-link:hover {
+    background: linear-gradient(135deg, #cc0000, #990000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+}
+
 .video-description {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 1.5rem;
 }
 
@@ -152,13 +155,13 @@
     margin: 0 0 1rem 0;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #333;
+    color: #e2e8f0;
 }
 
 .video-description p {
     margin: 0;
     line-height: 1.6;
-    color: #555;
+    color: #94a3b8;
     white-space: pre-wrap;
     word-break: break-word;
 }
@@ -211,7 +214,7 @@
     }
     
     .video-player-header {
-        padding: 0.75rem;
+        padding: 0.75rem 0.75rem 0.5rem 0.75rem;
     }
     
     .video-player-header h2 {
@@ -232,21 +235,21 @@
     }
 }
 
-/* 스크롤바 스타일링 */
+/* 커스텀 스크롤바 */
 .video-player-container::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .video-player-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
 }
 
 .video-player-container::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border-radius: 4px;
 }
 
 .video-player-container::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
 } 
